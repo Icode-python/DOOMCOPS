@@ -21,6 +21,7 @@ class Game:
 
     def new(self):
         self.all_sprites = pygame.sprite.Group()
+        player = Player(WIDTH/2, HEIGHT/2, self)
 
     def run(self):
         self.playing = True
@@ -33,8 +34,10 @@ class Game:
     def update(self):
         self.all_sprites.update()
 
-    def draw(self):
+    def draw(self, sprite=None, x=None, y=None):
         self.screen.fill(BACKGROUND_COLOR)
+        for sprite in self.all_sprites:
+            self.screen.blit(sprite.image, sprite.rect)
         pygame.display.flip()
 
     def quit(self):
