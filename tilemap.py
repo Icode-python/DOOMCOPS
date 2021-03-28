@@ -24,6 +24,9 @@ class Wall(pygame.sprite.Sprite):
             self.image = sprite
         self.image.fill(GREEN)
         self.rect = self.image.get_rect()
+        self.hit_rect = self.image.get_rect(center=(x * TILESIZE + TILESIZE/2, y * TILESIZE + TILESIZE/2))
+        #self.hit = pygame.Surface((TILESIZE,TILESIZE))
+        #self.hit.fill(BLACK)
         self.x = x
         self.y = y
         self.rect.x = x * TILESIZE

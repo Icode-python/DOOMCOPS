@@ -46,6 +46,8 @@ class Game:
         self.screen.fill(BACKGROUND_COLOR)
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, sprite.rect)
+        for wall in self.walls:
+            self.screen.blit(wall.hit, wall.hit_rect)
         pygame.display.flip()
 
     def quit(self):
