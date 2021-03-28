@@ -15,14 +15,22 @@ class Player(pygame.sprite.Sprite):
         self.image.fill(YELLOW)
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = self.x, self.y - self.height/2 + 10
-        self.mass = 1
+        self.mass = 5
         self.speed = 5
+        self.jumppower = 3
+        self.up = False
+        self.down = False
+        self.left = False
+        self.right = False
+        self.standing = False
 
     def update(self):
         self.draw()
         self.keys()
-        if not self.collideWithWalls('floor'):
+        if not self.collideWithFloor():
             self.rect.y += self.mass * self.game.gravity
+        if self.up == True:
+            self.rect.y -= self.mass + self.jumppower
 
     def draw(self):
         pass
@@ -32,18 +40,36 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_d or pygame.K_RIGHT]:
             self.move(self.speed,0)
+            self.right = True
+            self.left = False
+        elif keys[pygame.K_a or pygame.K_LEFT]:
+            self.move(-self.speed,0)
+            self.right = False
+            self.left = True
+        elif keys[pygame.K_w or pygame.K_UP]:
+            self.up = True
+            self.left = False
+            self.right = False
+        else:
+            self.up = False
     
     def move(self, dx=0, dy=0):
-        if not self.collideWithWalls('side'):
+        if not self.collideWithWalls():
             self.rect.x += dx
             self.rect.y += dy
     
-    def collideWithWalls(self, facing):
+    def collideWithWalls(self):
         if pygame.sprite.spritecollideany(self, self.game.walls):
-            for wall in self.game.walls:
-                if facing == wall.facing:
-                    print(facing, wall.facing)
-                    #print("true")
-                    return True
+            if self.right is True:
+                self.rect.x -= 10
+            if self.left is True:
+                self.rect.x += 10
+            return True
+        else:
+            return False
+
+    def collideWithFloor(self):
+        if pygame.sprite.spritecollideany(self, self.game.floor):
+            return True
         else:
             return False

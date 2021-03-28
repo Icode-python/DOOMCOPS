@@ -14,8 +14,11 @@ class Map:
         self.height = self.tileheight * TILESIZE
 
 class Wall(pygame.sprite.Sprite):
-    def __init__(self, game, x, y, facing, sprite='none'):
-        self.groups = game.all_sprites, game.walls
+    def __init__(self, game, x, y, groups, sprite='none'):
+        if groups == 'walls':
+            self.groups = game.all_sprites,game.walls
+        if groups == 'floor':
+            self.groups = game.all_sprites,game.floor
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         if sprite =='none':
@@ -31,4 +34,3 @@ class Wall(pygame.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
-        self.facing = facing
