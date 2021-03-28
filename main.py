@@ -25,7 +25,6 @@ class Game:
     def new(self):
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
-        self.floor = pygame.sprite.Group()
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == "1":

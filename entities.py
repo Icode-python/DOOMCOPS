@@ -9,8 +9,8 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.x = x * TILESIZE
         self.y = y * TILESIZE
-        self.width = 60
-        self.height = 110
+        self.width = TILESIZE
+        self.height = TILESIZE * 2
         self.image = pygame.Surface((self.width,self.height))
         self.image.fill(YELLOW)
         self.rect = self.image.get_rect()
@@ -21,13 +21,11 @@ class Player(pygame.sprite.Sprite):
         self.jumpheight = PLAYERJUMPHEIGHT
         self.vx, self.vy = 0, 0
         self.up = False
-        self.down = False
         self.left = False
         self.right = False
         self.grounded = False
 
     def update(self):
-        print(self.grounded)
         self.draw()
         self.keys()
         self.jump()
@@ -47,7 +45,7 @@ class Player(pygame.sprite.Sprite):
         self.vy += GRAVITY
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w or pygame.K_UP] and self.grounded is True and self.up is False:
-            self.jump()
+            #self.jump()
             self.grounded = False
             self.up = True
             self.left = False
@@ -64,7 +62,7 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         if self.up == True:
             if self.jumpheight >= 0:
-                self.vy = -GRAVITY + GRAVITY/4
+                self.vy = -GRAVITY
                 self.jumpheight -= 1
             else:
                 self.jumpheight = PLAYERJUMPHEIGHT
