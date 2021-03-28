@@ -16,11 +16,12 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = self.x, self.y - self.height/2 + 10
         self.mass = 1
+        self.speed = 5
 
     def update(self):
         self.draw()
         self.keys()
-        if not self.collideWithWalls():
+        if not self.collideWithWalls('floor'):
             self.rect.y += self.mass * self.game.gravity
 
     def draw(self):
@@ -29,14 +30,20 @@ class Player(pygame.sprite.Sprite):
     
     def keys(self):
         keys = pygame.key.get_pressed()
-        if not self.collideWithWalls():
-            if keys[pygame.K_d or pygame.K_RIGHT]:
-                self.rect.x += 5
+        if keys[pygame.K_d or pygame.K_RIGHT]:
+            self.move(self.speed,0)
     
-    def collideWithWalls(self):
+    def move(self, dx=0, dy=0):
+        if not self.collideWithWalls('side'):
+            self.rect.x += dx
+            self.rect.y += dy
+    
+    def collideWithWalls(self, facing):
         if pygame.sprite.spritecollideany(self, self.game.walls):
-            self.rect.centery -= self.width/2
-            print("collision")
-            return True
+            for wall in self.game.walls:
+                if facing == wall.facing:
+                    print(facing, wall.facing)
+                    #print("true")
+                    return True
         else:
             return False

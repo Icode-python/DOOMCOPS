@@ -29,7 +29,9 @@ class Game:
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == "1":
-                    Wall(self, col, row)
+                    Wall(self, col, row, 'side')
+                if tile == "2":
+                    Wall(self, col, row, 'floor')
                 if tile == "P":
                     self.player = Player(col, row, self)
 
