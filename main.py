@@ -35,6 +35,8 @@ class Game:
                     Wall(self, col, row, 'floor')
                 if tile == "P":
                     self.player = Player(col, row, self)
+        
+        self.camera = Camera(self.map.width, self.map.height)
 
     def run(self):
         self.playing = True
@@ -46,11 +48,12 @@ class Game:
     
     def update(self):
         self.all_sprites.update()
+        self.camera.update(self.player)
 
     def draw(self, sprite=None, x=None, y=None):
         self.screen.fill(BACKGROUND_COLOR)
         for sprite in self.all_sprites:
-            self.screen.blit(sprite.image, sprite.rect)
+            self.screen.blit(sprite.image, self.camera.apply(sprite))
         #self.screen.blit(self.player.hit, self.player.hit_rect)
         #for wall in self.walls:
         #    self.screen.blit(wall.hit, wall.hit_rect)
