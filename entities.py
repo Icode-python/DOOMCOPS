@@ -18,6 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.mass = 5
         self.speed = 5
         self.jumppower = 3
+        self.jumpheight = PLAYERJUMPHEIGHT
         self.up = False
         self.down = False
         self.left = False
@@ -27,10 +28,9 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.draw()
         self.keys()
+        self.jump()
         if not self.collideWithFloor():
             self.rect.y += self.mass * self.game.gravity
-        if self.up == True:
-            self.rect.y -= self.mass + self.jumppower
 
     def draw(self):
         pass
@@ -38,7 +38,12 @@ class Player(pygame.sprite.Sprite):
     
     def keys(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_d or pygame.K_RIGHT]:
+        if keys[pygame.K_w or pygame.K_UP]:
+            if self.up != True and self.collideWithFloor():
+                self.up = True
+                self.left = False
+                self.right = False
+        elif keys[pygame.K_d or pygame.K_RIGHT]:
             self.move(self.speed,0)
             self.right = True
             self.left = False
@@ -46,13 +51,17 @@ class Player(pygame.sprite.Sprite):
             self.move(-self.speed,0)
             self.right = False
             self.left = True
-        elif keys[pygame.K_w or pygame.K_UP]:
-            self.up = True
-            self.left = False
-            self.right = False
-        else:
-            self.up = False
-    
+
+    def jump(self):
+        print(self.jumpheight)
+        if self.up == True:
+            if self.jumpheight >= 0:
+                self.rect.y -= self.mass * 2
+                self.jumpheight -= 1
+            else:
+                self.jumpheight = PLAYERJUMPHEIGHT
+                self.up = False
+
     def move(self, dx=0, dy=0):
         if not self.collideWithWalls():
             self.rect.x += dx
