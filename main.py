@@ -1,8 +1,10 @@
 import pygame
 import numpy as np
 import sys
+from os import path
 from settings import *
 from entities import *
+from tilemap import *
 import threading
 
 class Game:
@@ -17,11 +19,17 @@ class Game:
         self.load_data()
 
     def load_data(self):
-        pass
+        game_folder = path.dirname(__file__)
+        self.map = Map(path.join(game_folder, "mapexample.txt"))
 
     def new(self):
         self.all_sprites = pygame.sprite.Group()
-        player = Player(WIDTH/2, HEIGHT/2, self)
+        self.walls = pygame.sprite.Group()
+        self.player = Player(WIDTH/2, HEIGHT/2, self)
+        for row, tiles in enumerate(self.map.data):
+            for col, tile in enumerate(tiles):
+                if tile == "1":
+                    Wall(self, col, row)
 
     def run(self):
         self.playing = True
