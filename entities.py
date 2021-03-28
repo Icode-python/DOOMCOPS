@@ -19,6 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.speed = 5
         self.jumppower = 3
         self.jumpheight = PLAYERJUMPHEIGHT
+        self.vx, self.vy = 0, 0
         self.up = False
         self.down = False
         self.left = False
@@ -29,31 +30,36 @@ class Player(pygame.sprite.Sprite):
         self.draw()
         self.keys()
         self.jump()
-        if not self.collideWithFloor():
-            self.rect.y += self.mass * self.game.gravity
+        self.x += self.vx * self.game.dt
+        self.y += self.vy * self.game.dt
+        self.rect.x = self.x
+        self.collideWithWalls('x')
+        self.rect.y = self.y
+        self.collideWithWalls('y')
+        self.rect.y += self.mass * self.game.gravity
 
     def draw(self):
         pass
         #self.game.draw(self.image, self.rect.centerx, self.rect.centery)
     
     def keys(self):
+        self.vx, self.vy = 0, 0
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w or pygame.K_UP]:
-            if self.up != True and self.collideWithFloor():
+            if self.up != True:
                 self.up = True
                 self.left = False
                 self.right = False
         elif keys[pygame.K_d or pygame.K_RIGHT]:
-            self.move(self.speed,0)
+            self.vx = PLAYER_SPEED
             self.right = True
             self.left = False
         elif keys[pygame.K_a or pygame.K_LEFT]:
-            self.move(-self.speed,0)
+            self.vx = -PLAYER_SPEED
             self.right = False
             self.left = True
 
     def jump(self):
-        print(self.jumpheight)
         if self.up == True:
             if self.jumpheight >= 0:
                 self.rect.y -= self.mass * 2
@@ -61,24 +67,23 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.jumpheight = PLAYERJUMPHEIGHT
                 self.up = False
-
-    def move(self, dx=0, dy=0):
-        if not self.collideWithWalls():
-            self.rect.x += dx
-            self.rect.y += dy
     
-    def collideWithWalls(self):
-        if pygame.sprite.spritecollideany(self, self.game.walls):
-            if self.right is True:
-                self.rect.x -= 10
-            if self.left is True:
-                self.rect.x += 10
-            return True
-        else:
-            return False
-
-    def collideWithFloor(self):
-        if pygame.sprite.spritecollideany(self, self.game.floor):
-            return True
-        else:
-            return False
+    def collideWithWalls(self, dir):
+        if dir == 'x':
+            hits = pygame.sprite.spritecollide(self, self.game.walls, False)
+            if hits:
+                if self.vx > 0:
+                    self.x = hits[0].rect.left - self.rect.width
+                if self.vx < 0:
+                    self.x = hits[0].rect.right
+                self.vx = 0
+                self.rect.x = self.x
+        if dir == 'y':
+            hits = pygame.sprite.spritecollide(self, self.game.walls, False)
+            if hits:
+                if self.vy > 0:
+                    self.y = hits[0].rect.top - self.rect.height
+                if self.vy < 0:
+                    self.y = hits[0].rect.bottom
+                self.vy = 0
+                self.rect.y = self.y
