@@ -24,9 +24,10 @@ class Player(pygame.sprite.Sprite):
         self.down = False
         self.left = False
         self.right = False
-        self.standing = False
+        self.grounded = False
 
     def update(self):
+        print(self.grounded)
         self.draw()
         self.keys()
         self.jump()
@@ -43,10 +44,11 @@ class Player(pygame.sprite.Sprite):
     
     def keys(self):
         self.vx, self.vy = 0, 0
-        self.vy += self.game.gravity
+        self.vy += GRAVITY
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_w or pygame.K_UP]:
+        if keys[pygame.K_w or pygame.K_UP] and self.grounded is True and self.up is False:
             self.jump()
+            self.grounded = False
             self.up = True
             self.left = False
             self.right = False
@@ -62,7 +64,7 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         if self.up == True:
             if self.jumpheight >= 0:
-                self.vy = -self.game.gravity * 1.1
+                self.vy = -GRAVITY + GRAVITY/4
                 self.jumpheight -= 1
             else:
                 self.jumpheight = PLAYERJUMPHEIGHT
@@ -81,6 +83,7 @@ class Player(pygame.sprite.Sprite):
         if dir == 'y':
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
+                self.grounded = True
                 if self.vy > 0:
                     self.y = hits[0].rect.top - self.rect.height
                 if self.vy < 0:

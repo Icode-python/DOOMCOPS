@@ -17,7 +17,6 @@ class Game:
         self.enemies = []
         self.bullets = []
         self.load_data()
-        self.gravity = 20
 
     def load_data(self):
         game_folder = path.dirname(__file__)
