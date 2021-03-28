@@ -1,5 +1,6 @@
 import pygame
 import numpy as np
+import sys
 from settings import *
 from entities import *
 import threading
@@ -20,3 +21,36 @@ class Game:
 
     def new(self):
         self.all_sprites = pygame.sprite.Group()
+
+    def run(self):
+        self.playing = True
+        while self.playing:
+            self.dt = self.clock.tick(FPS) / 1000
+            self.update()
+            self.draw()
+            self.events()
+    
+    def update(self):
+        self.all_sprites.update()
+
+    def draw(self):
+        self.screen.fill(BACKGROUND_COLOR)
+        pygame.display.flip()
+
+    def quit(self):
+        pygame.quit()
+        sys.exit()
+    
+    def events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.quit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.quit()
+
+g = Game()
+while True:
+    g.new()
+    g.run()

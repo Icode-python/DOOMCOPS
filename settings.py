@@ -10,7 +10,7 @@ ORANGE = (255, 165, 0)
 WIDTH = 1024
 HEIGHT = 768
 FPS = 60
-TITLE = 'adventure game Version 3'
+TITLE = 'pyweek game'
 BACKGROUND_COLOR = DARKGREY
 
 PLAYER_WIDTH = 32
