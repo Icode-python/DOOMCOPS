@@ -17,6 +17,7 @@ class Game:
         self.enemies = []
         self.bullets = []
         self.load_data()
+        self.gravity = 1
 
     def load_data(self):
         game_folder = path.dirname(__file__)
@@ -25,11 +26,12 @@ class Game:
     def new(self):
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
-        self.player = Player(WIDTH/2, HEIGHT/2, self)
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == "1":
                     Wall(self, col, row)
+                if tile == "P":
+                    self.player = Player(col, row, self)
 
     def run(self):
         self.playing = True
@@ -46,8 +48,9 @@ class Game:
         self.screen.fill(BACKGROUND_COLOR)
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, sprite.rect)
-        for wall in self.walls:
-            self.screen.blit(wall.hit, wall.hit_rect)
+        #self.screen.blit(self.player.hit, self.player.hit_rect)
+        #for wall in self.walls:
+        #    self.screen.blit(wall.hit, wall.hit_rect)
         pygame.display.flip()
 
     def quit(self):
