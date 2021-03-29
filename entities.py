@@ -52,12 +52,12 @@ class Player(pygame.sprite.Sprite):
             #self.rect.x, self.rect.y = self.x, self.y - self.height/2 + 10
             self.rect = self.image.get_rect()
         if yn == False:
-            print('e')
-            self.image == pygame.Surface((self.width, self.height))
+            self.image = pygame.Surface((self.width, self.height))
             self.image.fill(YELLOW)
-            #self.rect = self.image.get_rect()
+            self.rect = self.image.get_rect()
+            self.y -= self.crouchsize
             #self.rect.x, self.rect.y = self.x, self.y - self.height/2 + 10
-
+            
     def keys(self):
         self.vx, self.vy = 0, 0
         self.vy += GRAVITY
