@@ -44,7 +44,7 @@ class Player(pygame.sprite.Sprite):
         self.vx, self.vy = 0, 0
         self.vy += GRAVITY
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_w or pygame.K_UP] and self.grounded is True and self.up is False:
+        if keys[pygame.K_w or pygame.K_UP or pygame.K_SPACE] and self.grounded is True and self.up is False:
             #self.jump()
             self.grounded = False
             self.up = True
