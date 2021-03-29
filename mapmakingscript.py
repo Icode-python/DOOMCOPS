@@ -1,6 +1,6 @@
 import random
 import sys
-
+import numpy as np
 
 class mapGeneration():
     
@@ -118,9 +118,13 @@ class mapGeneration():
                     else:
                         x = random.randint(0,len(self.map_arr)-1)
                         self.f.write(self.map_arr[x])
-            i = i+1
+                        #i -= 1; self.columns -= 1
+                        self.f.write(self.map_arr[x])
+            i += 1
             #print(i, self.rows)
             self.f.write("\n")
 
 m = mapGeneration(input('rows '), input('columns '), 'mapexample.txt')
 m.generate()
+#noise = np.random.normal(1,1,10)
+#sys.stdout.write(str(noise))

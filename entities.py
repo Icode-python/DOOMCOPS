@@ -19,16 +19,30 @@ class Player(pygame.sprite.Sprite):
         self.speed = 5
         self.jumppower = 3
         self.jumpheight = PLAYERJUMPHEIGHT
+        self.crouchsize = self.height/2
         self.vx, self.vy = 0, 0
         self.up = False
         self.left = False
         self.right = False
-        self.grounded = False
+        self.grounded = True
+        self.down = True
 
     def update(self):
+        print(self.down)
         self.draw()
         self.keys()
         self.jump()
+        if self.down == True:
+            self.image = pygame.Surface((self.width, self.crouchsize))
+            self.image.fill(YELLOW)
+            self.y += self.crouchsize 
+            self.rect.x, self.rect.y = self.x, self.y - self.height/2 + 10
+            self.rect = self.image.get_rect()
+        elif self.down is not True:
+            self.image == pygame.Surface((self.width, self.height))
+            self.image.fill(YELLOW)
+            self.rect = self.image.get_rect()
+            #self.rect.x, self.rect.y = self.x, self.y - self.height/2 + 10
         self.x += self.vx * self.game.dt
         self.y += self.vy  
         self.rect.x = self.x
@@ -44,22 +58,26 @@ class Player(pygame.sprite.Sprite):
         self.vx, self.vy = 0, 0
         self.vy += GRAVITY
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_w or pygame.K_UP or pygame.K_SPACE] and self.grounded is True and self.up is False:
-            #self.jump()
-            self.grounded = False
-            self.up = True
-            self.left = False
-            self.right = False
-        elif keys[pygame.K_d or pygame.K_RIGHT]:
+        if keys[pygame.K_w] or keys[pygame.K_UP] or keys[pygame.K_SPACE]:
+            if self.grounded is True and self.up is False:
+                #self.jump()
+                self.grounded = False
+                self.up = True
+                self.left = False
+                self.right = False
+        elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             self.vx = PLAYER_SPEED
             self.right = True
             self.left = False
-        elif keys[pygame.K_a or pygame.K_LEFT]:
+        elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
             self.vx = -PLAYER_SPEED
             self.right = False
             self.left = True
+        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+            self.down == True
 
     def jump(self):
+        self.collideWithWalls()
         if self.up == True:
             if self.jumpheight >= 0:
                 self.vy = -GRAVITY
@@ -68,7 +86,7 @@ class Player(pygame.sprite.Sprite):
                 self.jumpheight = PLAYERJUMPHEIGHT
                 self.up = False
     
-    def collideWithWalls(self, dir):
+    def collideWithWalls(self, dir=None):
         if dir == 'x':
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
@@ -81,8 +99,8 @@ class Player(pygame.sprite.Sprite):
         if dir == 'y':
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
-                self.grounded = True
                 if self.vy > 0:
+                    self.grounded = True
                     self.y = hits[0].rect.top - self.rect.height
                 if self.vy < 0:
                     self.y = hits[0].rect.bottom
