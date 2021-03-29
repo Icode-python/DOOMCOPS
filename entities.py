@@ -28,8 +28,7 @@ class Player(pygame.sprite.Sprite):
         self.down = False
 
     def update(self):
-        print(self.down)
-        self.ifcrouching()
+        #print(self.down, self.up)
         self.draw()
         self.keys()
         self.jump()
@@ -45,18 +44,18 @@ class Player(pygame.sprite.Sprite):
         pass
         #self.game.draw(self.image, self.rect.centerx, self.rect.centery)
     
-    def ifcrouching(self):
-        if self.down == True:
-            print('test')
+    def crouching(self, yn):
+        if yn == True:
             self.image = pygame.Surface((self.width, self.crouchsize))
             self.image.fill(YELLOW)
-            self.y += self.crouchsize 
+            #self.y += self.crouchsize 
             #self.rect.x, self.rect.y = self.x, self.y - self.height/2 + 10
             self.rect = self.image.get_rect()
-        if self.down == False:
+        if yn == False:
+            print('e')
             self.image == pygame.Surface((self.width, self.height))
             self.image.fill(YELLOW)
-            self.rect = self.image.get_rect()
+            #self.rect = self.image.get_rect()
             #self.rect.x, self.rect.y = self.x, self.y - self.height/2 + 10
 
     def keys(self):
@@ -64,6 +63,7 @@ class Player(pygame.sprite.Sprite):
         self.vy += GRAVITY
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w] or keys[pygame.K_UP] or keys[pygame.K_SPACE]:
+            self.crouching(False)
             self.down = False
             if self.grounded is True and self.up is False:
                 #self.jump()
@@ -80,6 +80,7 @@ class Player(pygame.sprite.Sprite):
             self.right = False
             self.left = True
         elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
+            self.crouching(True)
             self.down = True
             self.up = False
             self.jumpheight = PLAYERJUMPHEIGHT
