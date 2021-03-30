@@ -26,6 +26,7 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.mobs = pygame.sprite.Group()
+        self.players = pygame.sprite.Group()
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == "1":
@@ -48,8 +49,6 @@ class Game:
             self.events()
     
     def update(self):
-        for mob in self.mobs:
-            print(mob.rect.x, mob.rect.y)
         self.all_sprites.update()
         self.camera.update(self.player)
 

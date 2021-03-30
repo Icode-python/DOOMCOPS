@@ -6,7 +6,7 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self, x, y, game):
         self.game = game
-        self.groups = game.all_sprites
+        self.groups = game.all_sprites, game.players
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.x = x * TILESIZE
         self.y = y * TILESIZE
@@ -29,7 +29,7 @@ class Player(pygame.sprite.Sprite):
         self.down = False
 
     def update(self):
-        print(self.grounded)
+        #print(self.vx)
         #print(self.down, self.up)
         self.draw()
         self.keys()
@@ -110,14 +110,15 @@ class mob(pygame.sprite.Sprite):
         #self.kill_radius = pygame.Rect(x * TILESIZE, y * TILESIZE, TILESIZE * 20, TILESIZE * 20)
         self.x = x * TILESIZE
         self.y = y * TILESIZE
-        self.vy, self.vx = 0,10
+        self.vy, self.vx = 0,0
         self.moveDelay = 0
         self.chance = 1
         self.speed = 40
         self.dir = 1
     
     def update(self):
-        self.x += self.vx 
+        #print(self.x)
+        self.x += self.vx + self.dir * 5
         self.y += self.vy
         self.rect.x = self.x
         collideWithWalls(self, 'x')
@@ -127,8 +128,15 @@ class mob(pygame.sprite.Sprite):
 
     def move(self, x, y):
         self.vy = 0
-        self.vy += GRAVITY
+        #self.vy += GRAVITY
         #self.kill_radius.center = self.rect.center
         #if self.kill_radius.colliderect(self.game.player.rect):
         collideWithWalls(self, 'elsex')
-        #self.vx = 10 * self.dir
+            #self.dir = self.dir * -1
+        #self.x += 10 * self.dir
+        self.collisionplayer()
+
+    def collisionplayer(self):
+        hits = pygame.sprite.spritecollide(self, self.game.players, False)
+        if hits:
+            self.kill()
