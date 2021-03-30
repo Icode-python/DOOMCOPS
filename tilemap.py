@@ -25,7 +25,12 @@ def collideWithWalls(self, dir=None):
         if dir == 'else':
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
-                print('collision')
+                return True
+        
+        if dir == 'elsex':
+            hits = pygame.sprite.spritecollide(self, self.game.walls, False)
+            if hits:
+                self.vx = self.vx * -1
                 return True
 
 class Map:

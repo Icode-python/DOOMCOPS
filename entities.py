@@ -130,6 +130,5 @@ class mob(pygame.sprite.Sprite):
         self.vy += GRAVITY
         #self.kill_radius.center = self.rect.center
         #if self.kill_radius.colliderect(self.game.player.rect):
-        if collideWithWalls(self, 'else'):
-            self.vx = -self.vx
+        collideWithWalls(self, 'elsex')
         #self.vx = 10 * self.dir
