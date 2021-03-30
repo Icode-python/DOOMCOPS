@@ -110,22 +110,26 @@ class mob(pygame.sprite.Sprite):
         #self.kill_radius = pygame.Rect(x * TILESIZE, y * TILESIZE, TILESIZE * 20, TILESIZE * 20)
         self.x = x * TILESIZE
         self.y = y * TILESIZE
-        self.vy, self.vx = 0,3
+        self.vy, self.vx = 0,10
         self.moveDelay = 0
         self.chance = 1
         self.speed = 40
+        self.dir = 1
     
     def update(self):
-        self.x += self.vx * self.game.dt
-        self.y += self.vy #+ GRAVITY
+        self.x += self.vx 
+        self.y += self.vy
         self.rect.x = self.x
-        collideWithWalls('x')
+        collideWithWalls(self, 'x')
         self.rect.y = self.y
-        collideWithWalls('y')
+        collideWithWalls(self, 'y')
         self.move(self.game.player.x, self.game.player.y)
 
     def move(self, x, y):
+        self.vy = 0
+        self.vy += GRAVITY
         #self.kill_radius.center = self.rect.center
         #if self.kill_radius.colliderect(self.game.player.rect):
         if collideWithWalls(self, 'else'):
             self.vx = -self.vx
+        #self.vx = 10 * self.dir

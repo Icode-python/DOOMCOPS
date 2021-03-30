@@ -118,8 +118,6 @@ class mapGeneration():
                     else:
                         x = random.randint(0,len(self.map_arr)-1)
                         self.f.write(self.map_arr[x])
-                        #i -= 1; self.columns -= 1
-                        self.f.write(self.map_arr[x])
             i += 1
             #print(i, self.rows)
             self.f.write("\n")
