@@ -1,6 +1,33 @@
 import pygame
 from settings import *
 
+def collideWithWalls(self, dir=None):
+        if dir == 'x':
+            hits = pygame.sprite.spritecollide(self, self.game.walls, False)
+            if hits:
+                if self.vx > 0:
+                    self.x = hits[0].rect.left - self.rect.width
+                if self.vx < 0:
+                    self.x = hits[0].rect.right
+                self.vx = 0
+                self.rect.x = self.x
+        if dir == 'y':
+            hits = pygame.sprite.spritecollide(self, self.game.walls, False)
+            if hits:
+                if self.vy > 0:
+                    self.grounded = True
+                    self.y = hits[0].rect.top - self.rect.height
+                if self.vy < 0:
+                    self.y = hits[0].rect.bottom
+                self.vy = 0
+                self.rect.y = self.y
+        
+        if dir == 'else':
+            hits = pygame.sprite.spritecollide(self, self.game.walls, False)
+            if hits:
+                print('collision')
+                return True
+
 class Map:
     def __init__(self, filename):
         self.data = []

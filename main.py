@@ -25,6 +25,7 @@ class Game:
     def new(self):
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
+        self.mobs = pygame.sprite.Group()
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == "1":
@@ -33,6 +34,8 @@ class Game:
                     Wall(self, col, row, 'floor')
                 if tile == "P":
                     self.player = Player(col, row, self)
+                if tile == "E":
+                    mob(self,col,row)
         
         self.camera = Camera(self.map.width, self.map.height)
 

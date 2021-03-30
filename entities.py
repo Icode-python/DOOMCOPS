@@ -1,5 +1,6 @@
 import pygame
 from settings import *
+from tilemap import collideWithWalls
 
 class Player(pygame.sprite.Sprite):
 
@@ -28,6 +29,7 @@ class Player(pygame.sprite.Sprite):
         self.down = False
 
     def update(self):
+        print(self.grounded)
         #print(self.down, self.up)
         self.draw()
         self.keys()
@@ -36,9 +38,9 @@ class Player(pygame.sprite.Sprite):
         self.x += self.vx * self.game.dt
         self.y += self.vy  
         self.rect.x = self.x
-        self.collideWithWalls('x')
+        collideWithWalls(self, 'x')
         self.rect.y = self.y
-        self.collideWithWalls('y')
+        collideWithWalls(self, 'y')
 
     def draw(self):
         pass
@@ -51,13 +53,14 @@ class Player(pygame.sprite.Sprite):
             #self.y += self.crouchsize 
             #self.rect.x, self.rect.y = self.x, self.y - self.height/2 + 10
             self.rect = self.image.get_rect()
-        if yn == False:
-            self.image = pygame.Surface((self.width, self.height))
-            self.image.fill(YELLOW)
-            self.rect = self.image.get_rect()
-            self.y -= self.crouchsize
-            #self.rect.x, self.rect.y = self.x, self.y - self.height/2 + 10
-            
+        if not collideWithWalls(self, 'else'):
+            if yn == False:
+                self.image = pygame.Surface((self.width, self.height))
+                self.image.fill(YELLOW)
+                self.rect = self.image.get_rect()
+                self.y -= self.crouchsize
+                #self.rect.x, self.rect.y = self.x, self.y - self.height/2 + 10
+
     def keys(self):
         self.vx, self.vy = 0, 0
         self.vy += GRAVITY
@@ -83,10 +86,10 @@ class Player(pygame.sprite.Sprite):
             self.crouching(True)
             self.down = True
             self.up = False
-            self.jumpheight = PLAYERJUMPHEIGHT
+            #self.jumpheight = PLAYERJUMPHEIGHT
 
     def jump(self):
-        self.collideWithWalls()
+        collideWithWalls(self)
         if self.up == True:
             if self.jumpheight >= 0:
                 self.vy = -GRAVITY
@@ -94,25 +97,37 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.jumpheight = PLAYERJUMPHEIGHT
                 self.up = False
+
+
+class mob(pygame.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.mobs
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pygame.Surface((TILESIZE, TILESIZE))
+        self.image.fill(RED)
+        self.rect = self.image.get_rect()
+        #self.kill_radius = pygame.Rect(x * TILESIZE, y * TILESIZE, TILESIZE * 20, TILESIZE * 20)
+        self.x = x
+        self.y = y
+        self.vy, self.vx = 0,3
+        self.moveDelay = 0
+        self.chance = 1
+        self.speed = 40
     
-    def collideWithWalls(self, dir=None):
-        if dir == 'x':
-            hits = pygame.sprite.spritecollide(self, self.game.walls, False)
-            if hits:
-                print('collision')
-                if self.vx > 0:
-                    self.x = hits[0].rect.left - self.rect.width
-                if self.vx < 0:
-                    self.x = hits[0].rect.right
-                self.vx = 0
-                self.rect.x = self.x
-        if dir == 'y':
-            hits = pygame.sprite.spritecollide(self, self.game.walls, False)
-            if hits:
-                if self.vy > 0:
-                    self.grounded = True
-                    self.y = hits[0].rect.top - self.rect.height
-                if self.vy < 0:
-                    self.y = hits[0].rect.bottom
-                self.vy = 0
-                self.rect.y = self.y
+    def update(self):
+        self.x += self.vx * self.game.dt
+        self.y += self.vy  
+        self.rect.x = self.x
+        collideWithWalls('x')
+        self.rect.y = self.y
+        collideWithWalls('y')
+        self.move(self.game.player.x, self.game.player.y)
+
+    def move(self, x, y):
+        #self.kill_radius.center = self.rect.center
+        #if self.kill_radius.colliderect(self.game.player.rect):
+        self.vy += GRAVITY
+        self.x += self.vx
+        if collideWithWalls(self, 'else'):
+            self.vx = -self.vx
