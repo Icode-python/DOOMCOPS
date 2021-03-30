@@ -65,7 +65,7 @@ class Player(pygame.sprite.Sprite):
         self.vx, self.vy = 0, 0
         self.vy += GRAVITY
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_w] or keys[pygame.K_UP] or keys[pygame.K_SPACE]:
+        if keys[pygame.K_w] or keys[pygame.K_UP]:
             self.crouching(False)
             self.down = False
             if self.grounded is True and self.up is False:
@@ -87,6 +87,8 @@ class Player(pygame.sprite.Sprite):
             self.down = True
             self.up = False
             #self.jumpheight = PLAYERJUMPHEIGHT
+        elif keys[pygame.K_SPACE]:
+            pass
 
     def jump(self):
         collideWithWalls(self)
@@ -128,7 +130,7 @@ class mob(pygame.sprite.Sprite):
 
     def move(self, x, y):
         self.vy = 0
-        #self.vy += GRAVITY
+        self.vy += GRAVITY
         #self.kill_radius.center = self.rect.center
         #if self.kill_radius.colliderect(self.game.player.rect):
         collideWithWalls(self, 'elsex')
@@ -140,3 +142,25 @@ class mob(pygame.sprite.Sprite):
         hits = pygame.sprite.spritecollide(self, self.game.players, False)
         if hits:
             self.kill()
+
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, game, x, y, velx, vely):
+        self.groups = game.all_sprites, game.Bullets
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pygame.Surface((TILESIZE / 2, TILESIZE / 2))
+        self.image.fill(YELLOW)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.velx = velx
+        self.vely = vely
+        self.kill_timer = 0
+    
+    def update(self):
+        self.x += self.velx
+        self.collision()
+    
+    def collision(self):
+        hits = pygame.sprite.spritecollide(self, self.game.walls, True)
+        hits = pygame.sprite.spritecollide(self, self.game.mobs, True)

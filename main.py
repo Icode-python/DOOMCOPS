@@ -27,6 +27,7 @@ class Game:
         self.walls = pygame.sprite.Group()
         self.mobs = pygame.sprite.Group()
         self.players = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == "1":

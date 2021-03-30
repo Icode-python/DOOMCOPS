@@ -30,15 +30,23 @@ def collideWithWalls(self, dir=None):
         
         if dir == 'elsex':
             #print(self.vx)
+            for wall in self.game.walls:
+                if wall.rect.x == self.rect.x + TILESIZE:
+                    self.x = wall.rect.left - self.rect.width
+                    self.dir = -1
+            """
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
                 #print('collision')
                 #print(hits[0].rect.x, self.rect.x)
-                if self.rect.x == hits[0].rect.x + TILESIZE:
+                if self.x == hits[0].x:
+                    print('collision')
                     self.dir = -1
-                if self.rect.x == hits[0].rect.x - TILESIZE:
+                if self.x == hits[0].x + TILESIZE:
+                    print('collision')
                     self.dir = 1
                 return True
+            """
 
 class Map:
     def __init__(self, filename):
