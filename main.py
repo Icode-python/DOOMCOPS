@@ -48,6 +48,8 @@ class Game:
             self.events()
     
     def update(self):
+        for mob in self.mobs:
+            print(mob.rect.x, mob.rect.y)
         self.all_sprites.update()
         self.camera.update(self.player)
 
