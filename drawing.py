@@ -8,9 +8,9 @@ class Drawing:
         self.sc = sc
         self.sc_map = sc_map
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
-        self.textures = {'1': pygame.image.load('img/1.png').convert(),
-                        '2': pygame.image.load('img/2.png').convert(),
-                        'S': pygame.image.load('img/sky.png').convert()
+        self.textures = {'1': pygame.image.load('img/wall1.png').convert(),
+                        '2': pygame.image.load('img/wall2.png').convert(),
+                        'S': pygame.image.load('img/sky3.png').convert()
                         }
 
     def background(self, angle):
