@@ -30,7 +30,7 @@ while True:
     for mob in mobs:
         mob.move(player.x, player.y)
         mob.collisionPlayer()
-    ray_casting(sc, player.pos, player.angle)
+    #ray_casting(sc, player.pos, player.angle)
     for wall in Walls:
         sc.blit(wall.image, wall.rect)
     for mob in mobs:
