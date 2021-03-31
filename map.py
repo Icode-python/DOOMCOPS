@@ -27,14 +27,20 @@ m = Map('mapexample.txt')
 #    'WWWWWWWWWWWW'
 #]
 
-world_map = set()
+world_map = {}
+mini_map = set()
 mobset = set()
 for j, row in enumerate(m.data):
     for i, char in enumerate(row):
-        if char == '1':
-            world_map.add((i * TILE, j * TILE))
-            Wall(i * TILE,j * TILE)
-        if char == 'P':
-            player = Player(i * TILE, j * TILE)
-        if char == 'E':
-            mob(i * TILE, j * TILE)
+        if char != '.' and char != 'E':
+            mini_map.add((i * MAP_TILE, j * MAP_TILE))
+            if char == '1':
+                world_map[(i * TILE, j * TILE)] = '1'
+                Wall(i * TILE,j * TILE)
+            if char == '2':
+                world_map[(i * TILE, j * TILE)] = '2'
+                Wall(i * TILE,j * TILE)
+            if char == 'P':
+                player = Player(i * TILE, j * TILE)
+            if char == 'E':
+                mob(i * TILE, j * TILE)
