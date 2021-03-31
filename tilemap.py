@@ -11,7 +11,7 @@ def collideWithWalls(self, dir=None):
                     self.x = hits[0].rect.right
                 self.vx = 0
                 self.rect.x = self.x
-                return True
+                #return True
         if dir == 'y':
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
@@ -29,11 +29,6 @@ def collideWithWalls(self, dir=None):
                 return True
         
         if dir == 'elsex':
-            #print(self.vx)
-            for wall in self.game.walls:
-                if wall.rect.x == self.rect.x + TILESIZE:
-                    self.x = wall.rect.left - self.rect.width
-                    self.dir = -1
             """
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
