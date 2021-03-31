@@ -31,10 +31,15 @@ TEXTURE_WIDTH = 1200
 TEXTURE_HEIGHT = 1200
 TEXTURE_SCALE = TEXTURE_WIDTH // TILE
 
+# sprite settings
+DOUBLE_PI = math.pi * 2
+CENTER_RAY = NUM_RAYS // 2 - 1
+FAKE_RAYS = 100
+
 # player settings
 player_pos = (HALF_WIDTH, HALF_HEIGHT)
 player_angle = 0
-player_speed = 5
+player_speed = 10
 jumpheight = 10
 
 # colors
