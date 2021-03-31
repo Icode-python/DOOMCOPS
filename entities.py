@@ -122,7 +122,8 @@ class mob(pygame.sprite.Sprite):
     def update(self):
         self.move(self.game.player.x, self.game.player.y)
         #print(self.x)
-        self.x += self.vx + self.dir * 5
+        self.vx = 4 * self.dir
+        self.x += self.vx
         self.y += self.vy
         self.rect.x = self.x
         collideWithWalls(self, 'x')
@@ -130,13 +131,13 @@ class mob(pygame.sprite.Sprite):
         collideWithWalls(self, 'y')
 
     def move(self, x, y):
-        self.vx, self.vy = 0, 0
+        self.vx, self.vy, self.dir = 0, 0, 0
         self.vy += GRAVITY
-        #self.vy += GRAVITY
-        #for wall in self.game.walls:
-        #    if wall.x == self.x + TILESIZE:
-        #        self.x = wall.rect.left - self.rect.width
-        #        self.dir = -1
+        self.rect.x = self.x
+        if collideWithWalls(self, 'elsex'):
+            dir = -1
+        if not collideWithWalls(self, 'elsex'):
+            dir = 1
         self.collisionplayer()
 
     def collisionplayer(self):
@@ -163,5 +164,5 @@ class Bullet(pygame.sprite.Sprite):
         self.collision()
     
     def collision(self):
-        hits = pygame.sprite.spritecollide(self, self.game.walls, True)
-        hits = pygame.sprite.spritecollide(self, self.game.mobs, True)
+        pygame.sprite.spritecollide(self, self.game.walls, True)
+        pygame.sprite.spritecollide(self, self.game.mobs, True)

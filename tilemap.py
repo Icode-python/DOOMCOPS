@@ -7,12 +7,17 @@ def collideWithWalls(self, dir=None):
             if hits:
                 if self.vx > 0:
                     self.x = hits[0].rect.left - self.rect.width
+                    self.vx = 0
+                    self.rect.x = self.x
+                    print('true')
+                    return True
                 if self.vx < 0:
                     self.x = hits[0].rect.right
-                self.vx = 0
-                self.rect.x = self.x
-                #return True
-        if dir == 'y':
+                    self.vx = 0
+                    self.rect.x = self.x
+                    print('2')
+                    return False
+        elif dir == 'y':
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
                 if self.vy > 0:
@@ -23,12 +28,29 @@ def collideWithWalls(self, dir=None):
                 self.vy = 0
                 self.rect.y = self.y
         
-        if dir == 'else':
+        elif dir == 'else':
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
                 return True
         
-        if dir == 'elsex':
+        elif dir == 'elsex':
+            #print(self.vx)
+            hits = pygame.sprite.spritecollide(self, self.game.walls, False)
+            if hits:
+                if self.vx > 0:
+                    self.x = hits[0].rect.left - self.rect.width
+                    self.dir = -1
+                    self.vx = 0
+                    self.rect.x = self.x
+                    print('true')
+                    return True
+                if self.vx < 0:
+                    self.x = hits[0].rect.right
+                    self.dir = 1
+                    self.vx = 0
+                    self.rect.x = self.x
+                    print('false')
+                    return False
             """
             hits = pygame.sprite.spritecollide(self, self.game.walls, False)
             if hits:
