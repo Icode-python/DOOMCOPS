@@ -10,8 +10,8 @@ class Sprites:
         self.list_of_objects = [
             SpriteObject(self.sprite_types['barrel'], True, (7.1, 2.1), 1.8, 0.4),
             SpriteObject(self.sprite_types['barrel'], True, (5.9, 2.1), 1.8, 0.4),
-            #SpriteObject(self.sprite_types['pedestal'], True, (8.8, 2.5), 1.6, 0.5),
-            #SpriteObject(self.sprite_types['pedestal'], True, (8.8, 5.6), 1.6, 0.5),
+            SpriteObject(self.sprite_types['pedestal'], True, (8.8, 2.5), 1.6, 0.5),
+            SpriteObject(self.sprite_types['pedestal'], True, (8.8, 5.6), 1.6, 0.5),
             ]
 
 class SpriteObject:

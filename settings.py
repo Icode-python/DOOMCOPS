@@ -58,6 +58,7 @@ Walls = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 mobs = pygame.sprite.Group()
 players = pygame.sprite.Group()
+bullets = pygame.sprite.Group()
 
 def collidewithwalls(self, dir):
     if dir == 'x':
@@ -69,6 +70,7 @@ def collidewithwalls(self, dir):
                 self.x = hits[0].rect.right
             self.vx = 0
             self.rect.x = self.x
+            return True
     elif dir == 'y':
         hits = pygame.sprite.spritecollide(self, Walls, False)
         if hits:
@@ -78,3 +80,4 @@ def collidewithwalls(self, dir):
                 self.y = hits[0].rect.bottom
             self.vy = 0
             self.rect.y = self.y
+            return True

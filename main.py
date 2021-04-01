@@ -29,21 +29,24 @@ while True:
     sc.fill(BLACK)
     #drawing.background()
     all_sprites.update()
-    #for mob in mobs:
-    #    mob.move(player.x, player.y)
-    #    mob.collisionPlayer()
-    ##ray_casting(sc, player.pos, player.angle)
-    #for wall in Walls:
-    #    sc.blit(wall.image, wall.rect)
-    #for mob in mobs:
-    #    sc.blit(mob.image, mob.rect)
-    #sc.blit(player.image, player.rect)
 
     drawing.background(player.angle)
     walls = ray_casting(player, drawing.textures)
     drawing.world(walls + [obj.object_locate(player, walls) for obj in sprites.list_of_objects])
     drawing.fps(clock)
     drawing.mini_map(player)
+
+    for mob in mobs:
+        mob.move(player.x, player.y)
+        mob.collisionPlayer()
+    #ray_casting(sc, player.pos, player.angle)
+    #for wall in Walls:
+    #    sc.blit(wall.image, wall.rect)
+    #for mob in mobs:
+    #    sc.blit(mob.image, mob.rect)
+    #for bullet in bullets:
+    #    sc.blit(bullet.image, bullet.rect)
+    #sc.blit(player.image, player.rect)
 
     pygame.display.flip()
     clock.tick(FPS)
