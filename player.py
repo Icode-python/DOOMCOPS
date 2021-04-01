@@ -24,6 +24,9 @@ class Player(pygame.sprite.Sprite):
         return (self.x, self.y)
 
     def movement(self):
+        #print(self.angle)
+        if self.angle >= ANGLE_CLAMP or self.angle <= -ANGLE_CLAMP:
+            self.angle = 0
         self.x += self.vx
         self.y += self.vy
         self.rect.x = self.x
@@ -43,14 +46,14 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_s]:
             self.vx += -player_speed * cos_a
             self.vy += -player_speed * sin_a
-        if keys[pygame.K_a]:
-            self.angle -= SENSITIVITY
-        if keys[pygame.K_d]:
-            self.angle += SENSITIVITY
         if keys[pygame.K_LEFT]:
+            self.angle -= SENSITIVITY
+        if keys[pygame.K_RIGHT]:
+            self.angle += SENSITIVITY
+        if keys[pygame.K_a]:
             self.vx += player_speed * sin_a
             self.vy += -player_speed * cos_a
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_d]:
             self.vx = -player_speed * sin_a
             self.vy = player_speed * cos_a
         if keys[pygame.K_SPACE]:
@@ -58,10 +61,10 @@ class Player(pygame.sprite.Sprite):
             #print(self.vx, self.vy)
         if mousepos[0] < HALF_WIDTH:
             pygame.mouse.set_pos(HALF_WIDTH,HALF_HEIGHT)
-            self.angle -= SENSITIVITY
+            self.angle -= MOUSE_SENSITIVITY
         if mousepos[0] > HALF_WIDTH:
             pygame.mouse.set_pos(HALF_WIDTH,HALF_HEIGHT)
-            self.angle += SENSITIVITY
+            self.angle += MOUSE_SENSITIVITY
 
 class bullet(pygame.sprite.Sprite):
     def __init__(self,x,y,vx,vy,width=10,height=10):
@@ -122,6 +125,7 @@ class mob(pygame.sprite.Sprite):
         #for x in range(0,3):
         self.sprite = SpriteObject(pygame.image.load('img/demon.png'), True, (self.x // TILE, self.y // TILE), 1.6, 0.5, 2, 150)
         list_of_objects.append(self.sprite)
+        print('summoned {}'.format(self.sprite))
         #print(self.sprite.object)
 
     def update(self):

@@ -26,9 +26,9 @@ class SpriteObject:
         self.hw = hw
         self.offset = offset
 
-        if not static:
-            self.sprite_angles = [frozenset(range(i, i + 45)) for i in range(0, 360, 45)]
-            self.sprite_positions = {angle: pos for angle, pos in zip(self.sprite_angles, self.object)}
+        #if not static:
+        #    self.sprite_angles = [frozenset(range(i, i + 45)) for i in range(0, 360, 45)]
+        #    self.sprite_positions = {angle: pos for angle, pos in zip(self.sprite_angles, self.object)}
 
     def object_locate(self, player, walls):
         fake_walls0 = [walls[0] for i in range(FAKE_RAYS)]
@@ -53,15 +53,15 @@ class SpriteObject:
             half_proj_height = proj_height // 2
             shift = half_proj_height * self.shift
 
-            if not self.static:
-                if theta < 0:
-                    theta += DOUBLE_PI
-                theta = 360 - int(math.degrees(theta))
+            #if not self.static:
+            #    if theta < 0:
+            #        theta += DOUBLE_PI
+            #    theta = 360 - int(math.degrees(theta))
 
-                for angles in self.sprite_angles:
-                    if theta in angles:
-                        self.object = self.sprite_positions[angles]
-                        break
+                #for angles in self.sprite_angles:
+                #    if theta in angles:
+                #        self.object = self.sprite_positions[angles]
+                #        break
 
             sprite_pos = (current_ray * SCALE - half_proj_height, HALF_HEIGHT - half_proj_height) #+ shift - self.offset)
             sprite = pygame.transform.scale(self.object, (proj_height*self.hw, proj_height*self.hw))

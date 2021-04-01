@@ -4,7 +4,7 @@ from player import Player
 import math
 from map import *
 from sprite_objects import *
-from ray_casting import ray_casting, enemyRay_casting
+from ray_casting import ray_casting
 from drawing import *
 
 pygame.init()
