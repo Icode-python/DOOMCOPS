@@ -8,19 +8,23 @@ class Sprites:
             'pedestal': pygame.image.load('img/pedestal.png').convert_alpha()
         }
         self.list_of_objects = [
-            SpriteObject(self.sprite_types['barrel'], True, (7.1, 2.1), 1.8, 0.4),
-            SpriteObject(self.sprite_types['barrel'], True, (5.9, 2.1), 1.8, 0.4),
-            SpriteObject(self.sprite_types['pedestal'], True, (8.8, 2.5), 1.6, 0.5),
-            SpriteObject(self.sprite_types['pedestal'], True, (8.8, 5.6), 1.6, 0.5),
+            #SpriteObject(self.sprite_types['barrel'], True, (7.1, 2.1), 1.8, 0.4, 1, 0),
+            #SpriteObject(self.sprite_types['barrel'], True, (5.9, 2.1), 1.8, 0.4, 1, 0),
+            #SpriteObject(self.sprite_types['pedestal'], True, (8.8, 2.5), 1.6, 0.5, 1, 0),
+            #SpriteObject(self.sprite_types['pedestal'], True, (8.8, 5.6), 1.6, 0.5, 1, 0),
+            #SpriteObject(self.sprite_types['pedestal'], True, (8.8, 4), 1.6, 0.5, 1, 0),
             ]
 
 class SpriteObject:
-    def __init__(self, object, static, pos, shift, scale):
+    def __init__(self, object, static, pos, shift, scale, hw, offset):
         self.object = object
+        #print(self.object)
         self.static = static
         self.pos = self.x, self.y = pos[0] * TILE, pos[1] * TILE
         self.shift = shift
         self.scale = scale
+        self.hw = hw
+        self.offset = offset
 
         if not static:
             self.sprite_angles = [frozenset(range(i, i + 45)) for i in range(0, 360, 45)]
@@ -59,8 +63,8 @@ class SpriteObject:
                         self.object = self.sprite_positions[angles]
                         break
 
-            sprite_pos = (current_ray * SCALE - half_proj_height, HALF_HEIGHT - half_proj_height + shift)
-            sprite = pygame.transform.scale(self.object, (proj_height, proj_height))
+            sprite_pos = (current_ray * SCALE - half_proj_height, HALF_HEIGHT - half_proj_height) #+ shift - self.offset)
+            sprite = pygame.transform.scale(self.object, (proj_height*self.hw, proj_height*self.hw))
             return (distance_to_sprite, sprite, sprite_pos)
         else:
             return (False,)

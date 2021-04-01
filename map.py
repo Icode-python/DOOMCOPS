@@ -1,6 +1,7 @@
 from settings import *
 from player import *
 from os import path
+#from main import sprites
 
 class Map:
     def __init__(self, filename):
@@ -44,3 +45,4 @@ for j, row in enumerate(m.data):
             player = Player(i * TILE, j * TILE)
         if char == 'E':
             mob(i * TILE, j * TILE)
+            mobset.add((i * TILE, j * TILE))

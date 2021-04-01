@@ -4,7 +4,7 @@ from player import Player
 import math
 from map import *
 from sprite_objects import *
-from ray_casting import ray_casting
+from ray_casting import ray_casting, enemyRay_casting
 from drawing import *
 
 pygame.init()
@@ -17,6 +17,7 @@ pygame.mouse.set_visible(False)
 
 sprites = Sprites()
 drawing = Drawing(sc, sc_map)
+cursor = pygame.Surface((10,10))
 
 while True:
     for event in pygame.event.get():
@@ -33,12 +34,16 @@ while True:
     drawing.background(player.angle)
     walls = ray_casting(player, drawing.textures)
     drawing.world(walls + [obj.object_locate(player, walls) for obj in sprites.list_of_objects])
+    drawing.world(obj.object_locate(player, walls) for obj in list_of_objects)
+    #drawing.world(walls + [mob.sprite.object_locate(player, walls) for mob in mobs])
     drawing.fps(clock)
     drawing.mini_map(player)
 
     for mob in mobs:
-        mob.move(player.x, player.y)
+        mob.move(player.x, player.y, player)
         mob.collisionPlayer()
+    #drawing.drawMob()
+        #enemyRay_casting(sc, player.pos, player.angle)
     #ray_casting(sc, player.pos, player.angle)
     #for wall in Walls:
     #    sc.blit(wall.image, wall.rect)
@@ -47,6 +52,7 @@ while True:
     #for bullet in bullets:
     #    sc.blit(bullet.image, bullet.rect)
     #sc.blit(player.image, player.rect)
+    sc.blit(cursor, (HALF_WIDTH, HALF_HEIGHT))
 
     pygame.display.flip()
     clock.tick(FPS)

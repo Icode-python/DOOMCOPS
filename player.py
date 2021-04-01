@@ -1,6 +1,9 @@
 from settings import *
+from sprite_objects import *
 import pygame
 import math
+
+#sprites = Sprites()
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -13,6 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.Surface((self.width,self.height))
         self.image.fill(RED)
         self.rect = self.image.get_rect()
+        self.hit_rect = pygame.Rect(self.x, self.y, TILE * 10, TILE * 10)
         self.vx, self.vy = 0,0
 
     @property
@@ -26,6 +30,7 @@ class Player(pygame.sprite.Sprite):
         collidewithwalls(self,'x')
         self.rect.y = self.y
         collidewithwalls(self,'y')
+        self.hit_rect.move(self.rect.x, self.rect.y)
         #print(self.vx, self.vy)
         self.vx, self.vy = 0,0
         mousepos = pygame.mouse.get_pos()
@@ -38,14 +43,16 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_s]:
             self.vx += -player_speed * cos_a
             self.vy += -player_speed * sin_a
-        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
-            #self.vx += player_speed * sin_a
-            #self.vy += -player_speed * cos_a
+        if keys[pygame.K_a]:
             self.angle -= SENSITIVITY
-        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
-            #self.vx = -player_speed * sin_a
-            #self.vy = player_speed * cos_a
+        if keys[pygame.K_d]:
             self.angle += SENSITIVITY
+        if keys[pygame.K_LEFT]:
+            self.vx += player_speed * sin_a
+            self.vy += -player_speed * cos_a
+        if keys[pygame.K_RIGHT]:
+            self.vx = -player_speed * sin_a
+            self.vy = player_speed * cos_a
         if keys[pygame.K_SPACE]:
             bullet(self.x, self.y, player_speed * cos_a, player_speed * sin_a)
             #print(self.vx, self.vy)
@@ -96,8 +103,10 @@ class Wall(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+list_of_objects = []
+
 class mob(pygame.sprite.Sprite):
-    def __init__(self,x,y,width=12,height=12):
+    def __init__(self,x,y,width=64,height=64):
         self.groups = all_sprites, mobs
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.x = x
@@ -106,10 +115,15 @@ class mob(pygame.sprite.Sprite):
         self.height = height
         self.image = pygame.Surface((self.width, self.height))
         self.rect = self.image.get_rect()
+        self.follow_radius = pygame.Rect(x, y, TILE * 200, TILE * 200)
         self.rect.x = self.x
         self.rect.y = self.y
         self.vx, self.vy = 0, 0
-    
+        #for x in range(0,3):
+        self.sprite = SpriteObject(pygame.image.load('img/demon.png'), True, (self.x // TILE, self.y // TILE), 1.6, 0.5, 2, 150)
+        list_of_objects.append(self.sprite)
+        #print(self.sprite.object)
+
     def update(self):
         self.x += self.vx
         self.y += self.vy
@@ -117,24 +131,28 @@ class mob(pygame.sprite.Sprite):
         collidewithwalls(self,'x')
         self.rect.y = self.y
         collidewithwalls(self,'y')
+        self.sprite.x, self.sprite.y = self.x, self.y
         #self.move()
 
-    def move(self, targetx, targety):
+    def move(self, targetx, targety, player):
         self.vx, self.vy = 0,0
-        if self.x < targetx:
-            self.vx += MOBSPEED
-        if self.x > targetx:
-            self.vx -= MOBSPEED
-        if self.y < targety:
-            self.vy += MOBSPEED
-        if self.y > targety:
-            self.vy -= MOBSPEED
+        if self.follow_radius.colliderect(player.hit_rect):
+            if self.x < targetx:
+                self.vx += MOBSPEED
+            if self.x > targetx:
+                self.vx -= MOBSPEED
+            if self.y < targety:
+                self.vy += MOBSPEED
+            if self.y > targety:
+                self.vy -= MOBSPEED
     
     def collisionPlayer(self):
        #print('called')
         hits = pygame.sprite.spritecollide(self, players, False)
         if hits:
             self.kill()
+            list_of_objects.pop(list_of_objects.index(self.sprite))
         hits = pygame.sprite.spritecollide(self, bullets, False)
         if hits:
             self.kill()
+            list_of_objects.pop(list_of_objects.index(self.sprite))
