@@ -47,7 +47,7 @@ class Player(pygame.sprite.Sprite):
             #self.vy = player_speed * cos_a
             self.angle += SENSITIVITY
         if keys[pygame.K_SPACE]:
-            bullet(self.x, self.y, self.vx, self.vy)
+            bullet(self.x, self.y, player_speed * cos_a, player_speed * sin_a)
             #print(self.vx, self.vy)
         if mousepos[0] < HALF_WIDTH:
             pygame.mouse.set_pos(HALF_WIDTH,HALF_HEIGHT)
@@ -57,8 +57,8 @@ class Player(pygame.sprite.Sprite):
             self.angle += SENSITIVITY
 
 class bullet(pygame.sprite.Sprite):
-    def __init__(self,x,y,vx,vy,width=2,height=2):
-        print('spawned')
+    def __init__(self,x,y,vx,vy,width=10,height=10):
+        #print('spawned')
         self.groups = all_sprites, bullets
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.x = x
@@ -72,17 +72,16 @@ class bullet(pygame.sprite.Sprite):
         self.vx, self.vy = vx, vy
     
     def update(self):
-        print('called')
-        self.x += self.vx
-        self.y += self.vy
+        #print('called')
+        #print(self.vx, self.vy)
+        self.x += self.vx * 2
+        self.y += self.vy * 2
         self.rect.x = self.x
         if collidewithwalls(self,'x'):
             self.kill()
-            print('killed')
         self.rect.y = self.y
         if collidewithwalls(self,'y'):
             self.kill()
-            print('killed')
 
 class Wall(pygame.sprite.Sprite):
     def __init__(self, x, y, width=TILE, height=TILE):
@@ -134,5 +133,8 @@ class mob(pygame.sprite.Sprite):
     def collisionPlayer(self):
        #print('called')
         hits = pygame.sprite.spritecollide(self, players, False)
+        if hits:
+            self.kill()
+        hits = pygame.sprite.spritecollide(self, bullets, False)
         if hits:
             self.kill()

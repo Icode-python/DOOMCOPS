@@ -40,13 +40,13 @@ while True:
         mob.move(player.x, player.y)
         mob.collisionPlayer()
     #ray_casting(sc, player.pos, player.angle)
-    #for wall in Walls:
-    #    sc.blit(wall.image, wall.rect)
-    #for mob in mobs:
-    #    sc.blit(mob.image, mob.rect)
-    #for bullet in bullets:
-    #    sc.blit(bullet.image, bullet.rect)
-    #sc.blit(player.image, player.rect)
+    for wall in Walls:
+        sc.blit(wall.image, wall.rect)
+    for mob in mobs:
+        sc.blit(mob.image, mob.rect)
+    for bullet in bullets:
+        sc.blit(bullet.image, bullet.rect)
+    sc.blit(player.image, player.rect)
 
     pygame.display.flip()
     clock.tick(FPS)
