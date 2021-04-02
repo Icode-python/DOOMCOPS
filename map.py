@@ -21,7 +21,13 @@ class Map:
 
 #map = mapGeneration(rows, columns, filename)
 #map.generate()
-m = Map('e')
+levelNumber = 0
+levels = []
+for x in range(0,20):
+    levels.append('levels/{}'.format(x))
+
+print(levels[levelNumber])
+m = Map(levels[levelNumber])
 
 #text_map = [
 #    'WWWWWWWWWWWW',

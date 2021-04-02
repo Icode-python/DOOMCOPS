@@ -155,11 +155,11 @@ class mob(pygame.sprite.Sprite):
         self.sprite_change = 0
         self.standing = False
         #for x in range(0,3):
-        self.sprite = SpriteObject(pygame.image.load('img/demon2/0.png'), True, (self.x // TILE, self.y // TILE), 1.6, 0.5, 2, 150)
+        self.sprite = SpriteObject(pygame.image.load('img/robber/0.png'), True, (self.x // TILE, self.y // TILE), 1.6, 0.5, 2, 150)
         list_of_objects.append(self.sprite)
         self.sprites = []
         for x in range(0,7):
-            self.sprites.append(pygame.image.load('img/demon2/{}.png'.format(x)))
+            self.sprites.append(pygame.image.load('img/robber/{}.png'.format(x)))
         #print(self.sprite.object)
 
     def update(self):
@@ -169,7 +169,7 @@ class mob(pygame.sprite.Sprite):
         collidewithwalls(self,'x')
         self.rect.y = self.y
         collidewithwalls(self,'y')
-        self.sprite.x, self.sprite.y = self.rect.centerx + self.width, self.rect.centery
+        self.sprite.x, self.sprite.y = self.rect.x + self.width, self.rect.y
         self.animation()
         #self.move()
     

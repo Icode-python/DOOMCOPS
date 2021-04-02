@@ -120,5 +120,6 @@ class mapGeneration:
             i = i+1
             self.f.write("\n")
 
-m = mapGeneration(input("Enter the number of self.rows: "),input("Enter the number of self.columns: "),input('filename: '))
-m.generate()
+for x in range(0,21):
+    m = mapGeneration(20,20,x)
+    m.generate()
