@@ -35,13 +35,14 @@ while True:
     walls = ray_casting_walls(player, drawing.textures)
     drawing.world(walls + [obj.object_locate(player, walls) for obj in sprites.list_of_objects])
     drawing.world(obj.object_locate(player, walls) for obj in list_of_objects)
+    drawing.player(player)
     #drawing.world(walls + [mob.sprite.object_locate(player, walls) for mob in mobs])
     drawing.fps(clock)
-    drawing.mini_map(player)
+    #drawing.mini_map(player)
 
     for mob in mobs:
         mob.move(player.x, player.y, player)
-        mob.collisionPlayer()
+        mob.collisionPlayer(player)
     #drawing.drawMob()
         #enemyRay_casting(sc, player.pos, player.angle)
     #ray_casting(sc, player.pos, player.angle)

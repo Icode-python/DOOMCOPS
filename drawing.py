@@ -10,7 +10,7 @@ class Drawing:
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
         self.textures = {'1': pygame.image.load('img/wall1.png').convert(),
                         '2': pygame.image.load('img/wall2.png').convert(),
-                        'S': pygame.image.load('img/sky3.png').convert()
+                        'S': pygame.image.load('img/sky2.png').convert()
                         }
 
     def background(self, angle):
@@ -31,6 +31,10 @@ class Drawing:
         display_fps = str(int(clock.get_fps()))
         render = self.font.render(display_fps, 0, RED)
         self.sc.blit(render, FPS_POS)
+    
+    def player(self, player):
+        pygame.draw.rect(self.sc, RED, (WIDTH - 50, 80, 32, 32 * player.health))
+        self.sc.blit(player.weapon, (HALF_WIDTH - 148, HEIGHT - 250))
 
     def mini_map(self, player):
         self.sc_map.fill(BLACK)

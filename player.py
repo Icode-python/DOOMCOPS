@@ -18,12 +18,20 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.hit_rect = pygame.Rect(self.x, self.y, TILE * 10, TILE * 10)
         self.vx, self.vy = 0,0
+        self.health = 5
+        self.weapon = pygame.image.load('img/gun.png')
+        self.weapon = pygame.transform.scale2x(self.weapon)
 
     @property
     def pos(self):
         return (self.x, self.y)
+    
+    def collision(self):
+        if self.health <= 0:
+            pygame.quit()
 
     def movement(self):
+        self.collision()
         #print(self.angle)
         if self.angle >= ANGLE_CLAMP or self.angle <= -ANGLE_CLAMP:
             self.angle = 0
@@ -154,11 +162,12 @@ class mob(pygame.sprite.Sprite):
             if self.y > targety:
                 self.vy -= MOBSPEED
     
-    def collisionPlayer(self):
+    def collisionPlayer(self, player):
        #print('called')
         hits = pygame.sprite.spritecollide(self, players, False)
         if hits:
             self.kill()
+            player.health -= 1
             list_of_objects.pop(list_of_objects.index(self.sprite))
         hits = pygame.sprite.spritecollide(self, bullets, False)
         if hits:

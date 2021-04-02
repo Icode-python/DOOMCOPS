@@ -42,7 +42,7 @@ mini_map = set()
 mobset = set()
 for j, row in enumerate(m.data):
     for i, char in enumerate(row):
-        if char != '_' and char != 'E' and char != 'P':
+        if char != '.' and char != 'E' and char != 'P':
             mini_map.add((i * MAP_TILE, j * MAP_TILE))
             if char == '1':
                 world_map[(i * TILE, j * TILE)] = '1'
