@@ -135,9 +135,15 @@ class mob(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
         self.vx, self.vy = 0, 0
+        self.walk_cycle = 0
+        self.sprite_change = 0
+        self.standing = False
         #for x in range(0,3):
-        self.sprite = SpriteObject(pygame.image.load('img/demon.png'), True, (self.x // TILE, self.y // TILE), 1.6, 0.5, 2, 150)
+        self.sprite = SpriteObject(pygame.image.load('img/demon2/0.png'), True, (self.x // TILE, self.y // TILE), 1.6, 0.5, 2, 150)
         list_of_objects.append(self.sprite)
+        self.sprites = []
+        for x in range(0,7):
+            self.sprites.append(pygame.image.load('img/demon2/{}.png'.format(x)))
         #print(self.sprite.object)
 
     def update(self):
@@ -148,7 +154,20 @@ class mob(pygame.sprite.Sprite):
         self.rect.y = self.y
         collidewithwalls(self,'y')
         self.sprite.x, self.sprite.y = self.x, self.y
+        self.animation()
         #self.move()
+    
+    def animation(self):
+        if not self.standing:
+            if self.walk_cycle >= 6:
+                self.walk_cycle = 0
+            if self.sprite_change >= 10:
+                self.walk_cycle += 1
+                self.sprite_change = 0
+            self.sprite_change += 1
+            self.sprite.object = self.sprites[self.walk_cycle]
+        else:
+            self.walk_cycle = 0
 
     def move(self, targetx, targety, player):
         self.vx, self.vy = 0,0
@@ -161,6 +180,8 @@ class mob(pygame.sprite.Sprite):
                 self.vy += MOBSPEED
             if self.y > targety:
                 self.vy -= MOBSPEED
+        else:
+            self.standing = False
     
     def collisionPlayer(self, player):
        #print('called')
