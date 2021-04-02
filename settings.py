@@ -1,4 +1,5 @@
 import math, pygame
+pygame.mixer.init()
 
 # game settings
 WIDTH = 1200
@@ -26,7 +27,7 @@ DIST = NUM_RAYS / (2 * math.tan(HALF_FOV))
 PROJ_COEFF = 3 * DIST * TILE
 SCALE = WIDTH // NUM_RAYS
 SENSITIVITY = 0.06
-MOUSE_SENSITIVITY = SENSITIVITY * 1.2
+MOUSE_SENSITIVITY = SENSITIVITY * 1.5
 MOBSPEED = 1
 
 # texture settings (1200, 1200)
@@ -41,6 +42,7 @@ FAKE_RAYS = 100
 FAKE_RAYS_RANGE = NUM_RAYS - 1 + 2 * FAKE_RAYS
 
 # player settings
+AMMO = 1
 ANGLE_CLAMP = 6
 player_pos = (HALF_WIDTH, HALF_HEIGHT)
 player_angle = 0
@@ -59,6 +61,10 @@ SKYBLUE = (0,186,255)
 YELLOW = (220, 220, 0)
 SANDY = (244, 164, 96)
 
+#sounds
+GUNSOUND = pygame.mixer.Sound('img/gun/gun_sound.wav')
+
+bulletlist = []
 Walls = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 mobs = pygame.sprite.Group()

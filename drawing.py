@@ -34,7 +34,7 @@ class Drawing:
     
     def player(self, player):
         pygame.draw.rect(self.sc, RED, (WIDTH - 50, 80, 32, 32 * player.health))
-        self.sc.blit(player.weapon, (HALF_WIDTH - 148, HEIGHT - 250))
+        self.sc.blit(player.weapons[player.currentWeapon], (HALF_WIDTH - 148, HEIGHT - 250))
 
     def mini_map(self, player):
         self.sc_map.fill(BLACK)

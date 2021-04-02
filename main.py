@@ -8,6 +8,7 @@ from ray_casting import *
 from drawing import *
 
 pygame.init()
+pygame.mixer.init()
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
 sc_map = pygame.Surface((WIDTH // MAP_SCALE, HEIGHT // MAP_SCALE))
 pygame.display.set_caption('AMERICA RIP OFF XD')
@@ -26,6 +27,17 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 exit()
+            if event.key == pygame.K_SPACE:
+                if len(bulletlist) < 2 and player.ammo > 0:
+                    GUNSOUND.play()
+                    bulletlist.append(bullet(player.x, player.y, player_speed * player.cos_a, player_speed * player.sin_a))
+                    player.ammo -= 1
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                GUNSOUND.play()
+                bulletlist.append(bullet(player.x, player.y, player_speed * player.cos_a, player_speed * player.sin_a))
+                player.ammo -= 1
+
     player.movement()
     sc.fill(BLACK)
     #drawing.background()
