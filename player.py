@@ -169,7 +169,7 @@ class mob(pygame.sprite.Sprite):
         collidewithwalls(self,'x')
         self.rect.y = self.y
         collidewithwalls(self,'y')
-        self.sprite.x, self.sprite.y = self.x, self.y
+        self.sprite.x, self.sprite.y = self.rect.centerx + self.width, self.rect.centery
         self.animation()
         #self.move()
     

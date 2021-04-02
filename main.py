@@ -34,13 +34,17 @@ while True:
                     player.ammo -= 1
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                GUNSOUND.play()
-                bulletlist.append(bullet(player.x, player.y, player_speed * player.cos_a, player_speed * player.sin_a))
-                player.ammo -= 1
+                if len(bulletlist) < 2 and player.ammo > 0:
+                    GUNSOUND.play()
+                    bulletlist.append(bullet(player.x, player.y, player_speed * player.cos_a, player_speed * player.sin_a))
+                    player.ammo -= 1
 
     player.movement()
     sc.fill(BLACK)
     #drawing.background()
+    for mob in mobs:
+        mob.move(player.x, player.y, player)
+        mob.collisionPlayer(player)
     all_sprites.update()
 
     drawing.background(player.angle)
@@ -51,10 +55,9 @@ while True:
     #drawing.world(walls + [mob.sprite.object_locate(player, walls) for mob in mobs])
     drawing.fps(clock)
     #drawing.mini_map(player)
-
-    for mob in mobs:
-        mob.move(player.x, player.y, player)
-        mob.collisionPlayer(player)
+    if len(mobs) == 0:
+        print('quit')
+        pygame.quit()
     #drawing.drawMob()
         #enemyRay_casting(sc, player.pos, player.angle)
     #ray_casting(sc, player.pos, player.angle)
