@@ -6,12 +6,12 @@ from map import *
 def mapping(a, b):
     return (a // TILE) * TILE, (b // TILE) * TILE
 
-
-def ray_casting(player, textures):
-    walls = []
-    ox, oy = player.pos
+def ray_casting(player_pos, player_angle, world_map):
+    casted_walls = []
+    ox, oy = player_pos
+    texture_v, texture_h = 1, 1
     xm, ym = mapping(ox, oy)
-    cur_angle = player.angle - HALF_FOV
+    cur_angle = player_angle - HALF_FOV
     for ray in range(NUM_RAYS):
         sin_a = math.sin(cur_angle)
         cos_a = math.cos(cur_angle)
@@ -20,7 +20,7 @@ def ray_casting(player, textures):
 
         # verticals
         x, dx = (xm + TILE, 1) if cos_a >= 0 else (xm, -1)
-        for i in range(0, WIDTH, TILE):
+        for i in range(0, WORLD_WIDTH, TILE):
             depth_v = (x - ox) / cos_a
             yv = oy + depth_v * sin_a
             tile_v = mapping(x + dx, yv)
@@ -31,7 +31,7 @@ def ray_casting(player, textures):
 
         # horizontals
         y, dy = (ym + TILE, 1) if sin_a >= 0 else (ym, -1)
-        for i in range(0, HEIGHT, TILE):
+        for i in range(0, WORLD_HEIGHT, TILE):
             depth_h = (y - oy) / sin_a
             xh = ox + depth_h * cos_a
             tile_h = mapping(xh, y + dy)
@@ -43,33 +43,21 @@ def ray_casting(player, textures):
         # projection
         depth, offset, texture = (depth_v, yv, texture_v) if depth_v < depth_h else (depth_h, xh, texture_h)
         offset = int(offset) % TILE
-        depth *= math.cos(player.angle - cur_angle)
+        depth *= math.cos(player_angle - cur_angle)
         depth = max(depth, 0.00001)
-        proj_height = min(int(PROJ_COEFF / depth), 2 * HEIGHT)
+        proj_height = min(int(PROJ_COEFF / depth), PENTA_HEIGHT)
 
+        casted_walls.append((depth, offset, proj_height, texture))
+        cur_angle += DELTA_ANGLE
+    return casted_walls
+
+def ray_casting_walls(player, textures):
+    casted_walls = ray_casting(player.pos, player.angle, world_map)
+    walls = []
+    for ray, casted_values in enumerate(casted_walls):
+        depth, offset, proj_height, texture = casted_values
         wall_column = textures[texture].subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE, TEXTURE_HEIGHT)
         wall_column = pygame.transform.scale(wall_column, (SCALE, proj_height))
         wall_pos = (ray * SCALE, HALF_HEIGHT - proj_height // 2)
-
         walls.append((depth, wall_column, wall_pos))
-        cur_angle += DELTA_ANGLE
     return walls
-
-def enemyRay_casting(sc, player_pos, player_angle):
-    cur_angle = player_angle - HALF_FOV
-    xo, yo = player_pos
-    for ray in range(NUM_RAYS):
-        sin_a = math.sin(cur_angle)
-        cos_a = math.cos(cur_angle)
-        for depth in range(MAX_DEPTH):
-            x = xo + depth * cos_a
-            y = yo + depth * sin_a
-        # pygame.draw.line(sc, DARKGRAY, player_pos, (x, y), 2)
-        if (x // TILE * TILE, y // TILE * TILE) in mobset:
-            depth *= math.cos(player_angle - cur_angle)
-            proj_height = min(PROJ_COEFF / (depth + 0.0001), HEIGHT)
-            c = 255 / (1 + depth * depth * 0.0001)
-            color = (c // 2, c, c // 3)
-            pygame.draw.rect(sc, color, (ray * SCALE, HALF_HEIGHT - proj_height // 2, SCALE, proj_height))
-            break
-        cur_angle += DELTA_ANGLE

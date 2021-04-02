@@ -1,7 +1,11 @@
 from settings import *
 from player import *
+#from mapmakingscript import mapGeneration
 from os import path
+import random
 #from main import sprites
+
+filename = 'e'; rows = random.randint(0,50); columns = random.randint(0,50)
 
 class Map:
     def __init__(self, filename):
@@ -15,7 +19,9 @@ class Map:
         self.width = self.tilewidth * TILE
         self.height = self.tileheight * TILE
 
-m = Map('mapexample.txt')
+#map = mapGeneration(rows, columns, filename)
+#map.generate()
+m = Map('e')
 
 #text_map = [
 #    'WWWWWWWWWWWW',
@@ -27,6 +33,9 @@ m = Map('mapexample.txt')
 #    'W....W.....W',
 #    'WWWWWWWWWWWW'
 #]
+
+WORLD_WIDTH = 20 * TILE
+WORLD_HEIGHT = 20 * TILE
 
 world_map = {}
 mini_map = set()

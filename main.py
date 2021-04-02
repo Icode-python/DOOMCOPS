@@ -4,7 +4,7 @@ from player import Player
 import math
 from map import *
 from sprite_objects import *
-from ray_casting import ray_casting
+from ray_casting import *
 from drawing import *
 
 pygame.init()
@@ -32,7 +32,7 @@ while True:
     all_sprites.update()
 
     drawing.background(player.angle)
-    walls = ray_casting(player, drawing.textures)
+    walls = ray_casting_walls(player, drawing.textures)
     drawing.world(walls + [obj.object_locate(player, walls) for obj in sprites.list_of_objects])
     drawing.world(obj.object_locate(player, walls) for obj in list_of_objects)
     #drawing.world(walls + [mob.sprite.object_locate(player, walls) for mob in mobs])

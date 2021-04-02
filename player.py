@@ -65,6 +65,10 @@ class Player(pygame.sprite.Sprite):
         if mousepos[0] > HALF_WIDTH:
             pygame.mouse.set_pos(HALF_WIDTH,HALF_HEIGHT)
             self.angle += MOUSE_SENSITIVITY
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    bullet(self.x, self.y, player_speed * cos_a, player_speed * sin_a)
 
 class bullet(pygame.sprite.Sprite):
     def __init__(self,x,y,vx,vy,width=10,height=10):
@@ -79,13 +83,14 @@ class bullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
+        self.speed = 5
         self.vx, self.vy = vx, vy
     
     def update(self):
         #print('called')
         #print(self.vx, self.vy)
-        self.x += self.vx * 2
-        self.y += self.vy * 2
+        self.x += self.vx * self.speed
+        self.y += self.vy * self.speed
         self.rect.x = self.x
         if collidewithwalls(self,'x'):
             self.kill()
@@ -125,7 +130,6 @@ class mob(pygame.sprite.Sprite):
         #for x in range(0,3):
         self.sprite = SpriteObject(pygame.image.load('img/demon.png'), True, (self.x // TILE, self.y // TILE), 1.6, 0.5, 2, 150)
         list_of_objects.append(self.sprite)
-        print('summoned {}'.format(self.sprite))
         #print(self.sprite.object)
 
     def update(self):
