@@ -10,7 +10,7 @@ from drawing import *
 pygame.init()
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
 sc_map = pygame.Surface((WIDTH // MAP_SCALE, HEIGHT // MAP_SCALE))
-pygame.display.set_caption('DOOM RIP OFF XD')
+pygame.display.set_caption('AMERICA RIP OFF XD')
 clock = pygame.time.Clock()
 #player = Player()
 pygame.mouse.set_visible(False)
