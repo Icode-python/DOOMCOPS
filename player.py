@@ -170,7 +170,7 @@ class mob(pygame.sprite.Sprite):
         collidewithwalls(self,'x')
         self.rect.y = self.y
         collidewithwalls(self,'y')
-        self.sprite.x, self.sprite.y = self.rect.x, self.rect.y
+        #self.sprite.x, self.sprite.y = self.rect.x, self.rect.y
         self.animation()
         #self.move()
     
@@ -189,14 +189,20 @@ class mob(pygame.sprite.Sprite):
     def move(self, targetx, targety, player):
         self.vx, self.vy = 0,0
         if self.follow_radius.colliderect(player.hit_rect):
-            if self.x < targetx:
+            if round(self.x) < round(targetx):
                 self.vx += MOBSPEED
-            if self.x > targetx:
+                self.sprite.x, self.sprite.y = self.rect.x + self.rect.width/2, self.rect.y
+            if round(self.x) > round(targetx):
                 self.vx -= MOBSPEED
-            if self.y < targety:
+                self.sprite.x, self.sprite.y = self.rect.x - self.rect.width/2, self.rect.y
+            if round(self.y) < round(targety):
                 self.vy += MOBSPEED
-            if self.y > targety:
+                self.sprite.x, self.sprite.y = self.rect.x, self.rect.y - self.rect.width/2
+            if round(self.y) > round(targety):
                 self.vy -= MOBSPEED
+                self.sprite.x, self.sprite.y = self.rect.x, self.rect.y + self.rect.width/2
+            else:
+                self.sprite.x, self.sprite.y = self.rect.x, self.rect.y
         else:
             self.standing = False
     

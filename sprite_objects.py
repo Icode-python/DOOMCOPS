@@ -49,6 +49,8 @@ class SpriteObject:
 
         fake_ray = current_ray + FAKE_RAYS
         if 0 <= fake_ray <= NUM_RAYS - 1 + 2 * FAKE_RAYS and distance_to_sprite < fake_walls[fake_ray][0]:
+            if distance_to_sprite <= 0:
+                distance_to_sprite = 0.0000000001
             proj_height = min(int(PROJ_COEFF / distance_to_sprite * self.scale), 2 * HEIGHT)
             half_proj_height = proj_height // 2
             shift = half_proj_height * self.shift
