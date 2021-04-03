@@ -159,7 +159,7 @@ class mob(pygame.sprite.Sprite):
         list_of_objects.append(self.sprite)
         self.sprites = []
         for x in range(0,7):
-            self.sprites.append(pygame.image.load('img/robber/{}.png'.format(x)))
+            self.sprites.append(pygame.image.load('img/demon2/{}.png'.format(x)))
         #print(self.sprite.object)
 
     def update(self):

@@ -125,4 +125,4 @@ class mapGeneration:
 
 #for x in range(0,21):
 for x in range(0,20):
-    mapGeneration(50,50,x)
+    mapGeneration(20,20,x)
