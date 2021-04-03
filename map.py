@@ -23,7 +23,7 @@ class Map:
 #map.generate()
 class levelSystem:
     def __init__(self):
-        self.levelNumber = 0
+        self.levelNumber = 1
         self.levels = []
         for x in range(0,20):
             self.levels.append('levels/{}'.format(x))

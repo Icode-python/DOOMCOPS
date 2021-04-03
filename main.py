@@ -6,6 +6,7 @@ from map import *
 from sprite_objects import *
 from ray_casting import *
 from drawing import *
+import sys
 
 pygame.init()
 pygame.mixer.init()
@@ -61,10 +62,13 @@ while True:
     if len(mobs) == 0:
         #for sprites in all_sprites:
         #    sprites.kill()
-        print('quit')
         ls.levelNumber += 1
-        ls.generateLevel()
-        player = ls.player
+        if ls.levelNumber < len(ls.levels): 
+            ls.generateLevel()
+            player = ls.player
+        else:
+            pygame.quit()
+            sys.exit()
     #drawing.drawMob()
         #enemyRay_casting(sc, player.pos, player.angle)
     #ray_casting(sc, player.pos, player.angle)
