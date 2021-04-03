@@ -92,3 +92,9 @@ def collidewithwalls(self, dir):
             self.vy = 0
             self.rect.y = self.y
             return True
+    elif dir == 'else':
+        hits = pygame.sprite.spritecollide(self, Walls, False)
+        if hits:
+            return True
+        else:
+            return False

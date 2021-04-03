@@ -117,11 +117,12 @@ class bullet(pygame.sprite.Sprite):
         self.x += self.vx * self.speed
         self.y += self.vy * self.speed
         self.rect.x = self.x
-        if collidewithwalls(self,'x'):
+        #collidewithwalls(self,'x')
+        self.rect.y = self.y
+        #collidewithwalls(self,'y')
+        if collidewithwalls(self, 'else'):
             bulletlist.pop(bulletlist.index(self))
             self.kill()
-        self.rect.y = self.y
-        collidewithwalls(self,'y')
 
 class Wall(pygame.sprite.Sprite):
     def __init__(self, x, y, width=TILE, height=TILE):
