@@ -4,8 +4,8 @@ import sys
 class mapGeneration:
 
     def __init__(self, rows, columns, filename):
-        self.rows = int(rows)
-        self.columns = int(columns)
+        self.rows = rows
+        self.columns = columns
         self.filename = filename
         self.f = open("{}".format(self.filename), "w+")
         self.playerpos = (self.columns/2, self.rows/2)
@@ -92,7 +92,8 @@ class mapGeneration:
            '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2',
            '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2', '2',
            '2', '2', '.', '.', '2', '.', '.', 'E', '.', 'E', '2', '.', '.',
-           '2',  '.', '.',  '2', '.',  '.', '2',  '.', 'C', ]
+           '2',  '.', '.',  '2', '.',  '.', '2',  '.', '.', ]
+        self.generate()
 
 
     def generate(self):
@@ -111,6 +112,7 @@ class mapGeneration:
                     if j == 0:
                         self.f.write("1")
                     elif j == self.columns-1:
+                        #print('test')
                         self.f.write("1")
                     elif check == self.playerpos:
                         self.f.write('P')
@@ -119,7 +121,8 @@ class mapGeneration:
                         self.f.write(self.map_arr[x])
             i = i+1
             self.f.write("\n")
+        self.columns, self.rows = 0,0
 
-for x in range(0,21):
-    m = mapGeneration(20,20,x)
-    m.generate()
+#for x in range(0,21):
+for x in range(0,20):
+    mapGeneration(50,50,x)

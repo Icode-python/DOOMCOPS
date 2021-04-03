@@ -95,7 +95,7 @@ class Player(pygame.sprite.Sprite):
             self.angle += MOUSE_SENSITIVITY
 
 class bullet(pygame.sprite.Sprite):
-    def __init__(self,x,y,vx,vy,width=64,height=64):
+    def __init__(self,x,y,vx,vy,width=40,height=40):
         #print('spawned')
         self.groups = all_sprites, bullets
         pygame.sprite.Sprite.__init__(self, self.groups)
@@ -138,7 +138,7 @@ class Wall(pygame.sprite.Sprite):
 list_of_objects = []
 
 class mob(pygame.sprite.Sprite):
-    def __init__(self,x,y,width=100,height=100):
+    def __init__(self,x,y,width=70,height=70):
         self.groups = all_sprites, mobs
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.x = x
