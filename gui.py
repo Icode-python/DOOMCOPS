@@ -23,10 +23,10 @@ class menuSystem:
     def game_end(self):
         self.root = tk.Tk()
         self.root.geometry("{}x{}".format(WIDTH,HEIGHT))
-        noquitbutton = tk.Button(self.root, text="GO BACK", bg='gray', fg='black', bd='10', padx=str(100), pady=str(50), command=self.endgame)
+        noquitbutton = tk.Button(self.root, text="GO BACK", bg='gray', fg='black', bd='10', padx=str(100), pady=str(50), command=self.root.destroy)
         noquitbutton.pack()
         noquitbutton.grid(row=0, column=0,padx=230,pady=HEIGHT/2-100)
-        yesquitbutton = tk.Button(self.root, text="QUIT", bg='gray', fg='black', bd='10', padx=str(100), pady=str(50), command=self.root.destroy)
+        yesquitbutton = tk.Button(self.root, text="QUIT", bg='gray', fg='black', bd='10', padx=str(100), pady=str(50), command=self.endgame)
         yesquitbutton.grid(row=0, column=1, padx=0,pady=HEIGHT/2-100)
         self.root.mainloop()
 

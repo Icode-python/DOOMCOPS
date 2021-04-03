@@ -36,10 +36,14 @@ if menu.start == True:
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                exit()
+                menu.game_end()
+                if menu.end == True:
+                    exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    exit()
+                    menu.game_end()
+                    if menu.end == True:
+                        exit()
                 if event.key == pygame.K_SPACE and paused == False:
                     if len(bulletlist) < 2 and player.ammo > 0:
                         GUNSOUND.play()
