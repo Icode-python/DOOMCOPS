@@ -52,7 +52,7 @@ while True:
     all_sprites.update()
 
     drawing.background(player.angle)
-    walls = ray_casting_walls(player, drawing.textures, ls.world_map)
+    walls = ray_casting_walls(player, drawing.textures, ls.world_map, ls.width, ls.height)
     drawing.world(walls + [obj.object_locate(player, walls) for obj in sprites.list_of_objects])
     drawing.world(obj.object_locate(player, walls) for obj in list_of_objects)
     drawing.player(player)

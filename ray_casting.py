@@ -6,7 +6,7 @@ from map import *
 def mapping(a, b):
     return (a // TILE) * TILE, (b // TILE) * TILE
 
-def ray_casting(player_pos, player_angle, world_map):
+def ray_casting(player_pos, player_angle, world_map, WORLD_WIDTH, WORLD_HEIGHT):
     casted_walls = []
     ox, oy = player_pos
     texture_v, texture_h = 1, 1
@@ -51,8 +51,8 @@ def ray_casting(player_pos, player_angle, world_map):
         cur_angle += DELTA_ANGLE
     return casted_walls
 
-def ray_casting_walls(player, textures, world_map):
-    casted_walls = ray_casting(player.pos, player.angle, world_map)
+def ray_casting_walls(player, textures, world_map, width, height):
+    casted_walls = ray_casting(player.pos, player.angle, world_map, width, height)
     walls = []
     for ray, casted_values in enumerate(casted_walls):
         depth, offset, proj_height, texture = casted_values

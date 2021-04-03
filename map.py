@@ -6,6 +6,8 @@ import random
 #from main import sprites
 
 #filename = 'e'; rows = random.randint(0,50); columns = random.randint(0,50)
+#WORLD_WIDTH = 20 * TILE
+#WORLD_HEIGHT = 20 * TILE
 
 class Map:
     def __init__(self, filename):
@@ -16,6 +18,7 @@ class Map:
 
         self.tilewidth = len(self.data[0])
         self.tileheight = len(self.data)
+        #print(self.tilewidth, self.tileheight)
         self.width = self.tilewidth * TILE
         self.height = self.tileheight * TILE
 
@@ -31,9 +34,12 @@ class levelSystem:
         self.world_map = {}
         self.mini_map = set()
         self.mobset = set()
+        self.width = 0
+        self.height = 0
 
     def generateLevel(self):
         self.map = Map(self.levels[self.levelNumber])
+        self.width, self.height = self.map.width, self.map.height
         bulletlist.clear()
         mobs.empty()
         Walls.empty()
@@ -65,6 +71,3 @@ class levelSystem:
 #    'W....W.....W',
 #    'WWWWWWWWWWWW'
 #]
-
-WORLD_WIDTH = 20 * TILE
-WORLD_HEIGHT = 20 * TILE
