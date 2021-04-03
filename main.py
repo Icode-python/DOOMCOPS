@@ -18,13 +18,14 @@ clock = pygame.time.Clock()
 ls = levelSystem()
 ls.generateLevel()
 player = ls.player
-pygame.mouse.set_visible(False)
 
 sprites = Sprites()
 drawing = Drawing(sc, sc_map)
 cursor = pygame.Surface((10,10))
 paused = False
-
+pygame.mouse.set_visible(paused)
+MAINTHEME.play(-1)
+MAINTHEME.set_volume(0.1)
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -39,6 +40,11 @@ while True:
                     player.ammo -= 1
             if event.key == pygame.K_TAB:
                 paused = not paused
+                pygame.mouse.set_visible(paused)
+                if paused == True:
+                    pygame.mixer.pause()
+                else:
+                    pygame.mixer.unpause()
         if event.type == pygame.MOUSEBUTTONDOWN and paused == False:
             if event.button == 1:
                 if len(bulletlist) < 2 and player.ammo > 0:

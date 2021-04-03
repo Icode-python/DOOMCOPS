@@ -62,7 +62,8 @@ YELLOW = (220, 220, 0)
 SANDY = (244, 164, 96)
 
 #sounds
-GUNSOUND = pygame.mixer.Sound('img/gun/gun_sound.wav')
+GUNSOUND = pygame.mixer.Sound('sounds/gun_sound.wav')
+MAINTHEME = pygame.mixer.Sound('sounds/gameMusic.wav')
 
 bulletlist = []
 Walls = pygame.sprite.Group()
