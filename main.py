@@ -14,6 +14,9 @@ sc_map = pygame.Surface((WIDTH // MAP_SCALE, HEIGHT // MAP_SCALE))
 pygame.display.set_caption('AMERICA RIP OFF XD')
 clock = pygame.time.Clock()
 #player = Player()
+ls = levelSystem()
+ls.generateLevel()
+player = ls.player
 pygame.mouse.set_visible(False)
 
 sprites = Sprites()
@@ -48,7 +51,7 @@ while True:
     all_sprites.update()
 
     drawing.background(player.angle)
-    walls = ray_casting_walls(player, drawing.textures)
+    walls = ray_casting_walls(player, drawing.textures, ls.world_map)
     drawing.world(walls + [obj.object_locate(player, walls) for obj in sprites.list_of_objects])
     drawing.world(obj.object_locate(player, walls) for obj in list_of_objects)
     drawing.player(player)
@@ -56,8 +59,12 @@ while True:
     drawing.fps(clock)
     #drawing.mini_map(player)
     if len(mobs) == 0:
+        #for sprites in all_sprites:
+        #    sprites.kill()
         print('quit')
-        pygame.quit()
+        ls.levelNumber += 1
+        ls.generateLevel()
+        player = ls.player
     #drawing.drawMob()
         #enemyRay_casting(sc, player.pos, player.angle)
     #ray_casting(sc, player.pos, player.angle)
@@ -65,8 +72,8 @@ while True:
     #    sc.blit(wall.image, wall.rect)
     #for mob in mobs:
     #    sc.blit(mob.image, mob.rect)
-    #for bullet in bullets:
-    #    sc.blit(bullet.image, bullet.rect)
+    #for b in bullets:
+    #    sc.blit(b.image, b.rect)
     #sc.blit(player.image, player.rect)
     sc.blit(cursor, (HALF_WIDTH, HALF_HEIGHT))
 

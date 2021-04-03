@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from ray_casting import ray_casting
-from map import mini_map
+from map import *
 
 class Drawing:
     def __init__(self, sc, sc_map):
@@ -36,7 +36,7 @@ class Drawing:
         pygame.draw.rect(self.sc, RED, (WIDTH - 50, 80, 32, 32 * player.health))
         self.sc.blit(player.weapons[player.currentWeapon], (HALF_WIDTH - 148, HEIGHT - 250))
 
-    def mini_map(self, player):
+    def mini_map(self, player, mini_map):
         self.sc_map.fill(BLACK)
         map_x, map_y = player.x // MAP_SCALE, player.y // MAP_SCALE
         pygame.draw.line(self.sc_map, YELLOW, (map_x, map_y), (map_x + 12 * math.cos(player.angle),

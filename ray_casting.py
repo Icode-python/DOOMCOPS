@@ -51,7 +51,7 @@ def ray_casting(player_pos, player_angle, world_map):
         cur_angle += DELTA_ANGLE
     return casted_walls
 
-def ray_casting_walls(player, textures):
+def ray_casting_walls(player, textures, world_map):
     casted_walls = ray_casting(player.pos, player.angle, world_map)
     walls = []
     for ray, casted_values in enumerate(casted_walls):
