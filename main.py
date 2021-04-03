@@ -6,7 +6,11 @@ from map import *
 from sprite_objects import *
 from ray_casting import *
 from drawing import *
+from gui import *
 import sys
+
+
+game_start()
 
 pygame.init()
 pygame.mixer.init()
