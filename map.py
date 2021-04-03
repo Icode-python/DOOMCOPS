@@ -26,7 +26,7 @@ class Map:
 #map.generate()
 class levelSystem:
     def __init__(self):
-        self.levelNumber = 1
+        self.levelNumber = 0
         self.levels = []
         for x in range(0,20):
             self.levels.append('levels/{}'.format(x))
@@ -40,6 +40,9 @@ class levelSystem:
     def generateLevel(self):
         self.map = Map(self.levels[self.levelNumber])
         self.width, self.height = self.map.width, self.map.height
+        self.world_map.clear()
+        self.mini_map.clear()
+        self.mobset.clear()
         bulletlist.clear()
         mobs.empty()
         Walls.empty()
@@ -49,6 +52,7 @@ class levelSystem:
             for i, char in enumerate(row):
                 if char != '.' and char != 'E' and char != 'P':
                     self.mini_map.add((i * MAP_TILE, j * MAP_TILE))
+                    Wall(i * TILE,j * TILE)
                     if char == '1':
                         self.world_map[(i * TILE, j * TILE)] = '1'
                         Wall(i * TILE,j * TILE)

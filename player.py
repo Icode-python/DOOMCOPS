@@ -104,6 +104,7 @@ class bullet(pygame.sprite.Sprite):
         self.width = width
         self.height = height
         self.image = pygame.Surface((self.width, self.height))
+        self.image = pygame.transform.rotate(self.image, vx+vy)
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y

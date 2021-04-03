@@ -63,7 +63,9 @@ while True:
         #for sprites in all_sprites:
         #    sprites.kill()
         ls.levelNumber += 1
-        if ls.levelNumber < len(ls.levels): 
+        if ls.levelNumber < len(ls.levels):
+            list_of_objects.clear()
+            sprites.list_of_objects.clear() 
             ls.generateLevel()
             player = ls.player
         else:
@@ -71,14 +73,14 @@ while True:
             sys.exit()
     #drawing.drawMob()
         #enemyRay_casting(sc, player.pos, player.angle)
-    #ray_casting(sc, player.pos, player.angle)
-    #for wall in Walls:
-    #    sc.blit(wall.image, wall.rect)
-    #for mob in mobs:
-    #    sc.blit(mob.image, mob.rect)
-    #for b in bullets:
-    #    sc.blit(b.image, b.rect)
-    #sc.blit(player.image, player.rect)
+    #wwray_casting(sc, player.pos, player.angle)
+    for wall in Walls:
+        sc.blit(wall.image, wall.rect)
+    for mob in mobs:
+        sc.blit(mob.image, mob.rect)
+    for b in bullets:
+        sc.blit(b.image, b.rect)
+    sc.blit(player.image, player.rect)
     sc.blit(cursor, (HALF_WIDTH, HALF_HEIGHT))
 
     pygame.display.flip()
