@@ -192,16 +192,20 @@ class mob(pygame.sprite.Sprite):
         if self.follow_radius.colliderect(player.hit_rect):
             if round(self.x) < round(targetx):
                 self.vx += MOBSPEED
-                self.sprite.x, self.sprite.y = self.rect.x + self.rect.width/2, self.rect.y
+                self.sprite.x, self.sprite.y = self.rect.x, self.rect.y - self.rect.width/2
+                print('x')
             if round(self.x) > round(targetx):
                 self.vx -= MOBSPEED
-                self.sprite.x, self.sprite.y = self.rect.x - self.rect.width/2, self.rect.y
+                print('-x')
+                self.sprite.x, self.sprite.y = self.rect.x, self.rect.y + self.rect.width/2
             if round(self.y) < round(targety):
                 self.vy += MOBSPEED
-                self.sprite.x, self.sprite.y = self.rect.x, self.rect.y - self.rect.width/2
+                self.sprite.x, self.sprite.y = self.rect.x - self.width/2, self.rect.y 
+                print('y')
             if round(self.y) > round(targety):
                 self.vy -= MOBSPEED
-                self.sprite.x, self.sprite.y = self.rect.x, self.rect.y + self.rect.width/2
+                self.sprite.x, self.sprite.y = self.rect.x + self.width/2, self.rect.y
+                print('-y')
             else:
                 self.sprite.x, self.sprite.y = self.rect.x, self.rect.y
         else:
