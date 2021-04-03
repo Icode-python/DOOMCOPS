@@ -95,7 +95,7 @@ class Player(pygame.sprite.Sprite):
             self.angle += MOUSE_SENSITIVITY
 
 class bullet(pygame.sprite.Sprite):
-    def __init__(self,x,y,vx,vy,width=40,height=40):
+    def __init__(self,x,y,vx,vy,width=4,height=4):
         #print('spawned')
         self.groups = all_sprites, bullets
         pygame.sprite.Sprite.__init__(self, self.groups)

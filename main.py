@@ -74,13 +74,13 @@ while True:
     #drawing.drawMob()
         #enemyRay_casting(sc, player.pos, player.angle)
     #wwray_casting(sc, player.pos, player.angle)
-    for wall in Walls:
-        sc.blit(wall.image, wall.rect)
-    for mob in mobs:
-        sc.blit(mob.image, mob.rect)
-    for b in bullets:
-        sc.blit(b.image, b.rect)
-    sc.blit(player.image, player.rect)
+    #for wall in Walls:
+    #    sc.blit(wall.image, wall.rect)
+    #for mob in mobs:
+    #    sc.blit(mob.image, mob.rect)
+    #for b in bullets:
+    #    sc.blit(b.image, b.rect)
+    #sc.blit(player.image, player.rect)
     sc.blit(cursor, (HALF_WIDTH, HALF_HEIGHT))
 
     pygame.display.flip()
