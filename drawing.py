@@ -8,8 +8,8 @@ class Drawing:
         self.sc = sc
         self.sc_map = sc_map
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
-        self.textures = {'1': pygame.image.load('models/wall.png').convert(),
-                        '2': pygame.image.load('models/wall.png').convert(),
+        self.textures = {'1': pygame.image.load('img/Wall_uwu.png').convert(),
+                        '2': pygame.image.load('img/Wall_uwu.png').convert(),
                         'S': pygame.image.load('img/sky2.png').convert()
                         }
 
@@ -19,7 +19,7 @@ class Drawing:
         self.sc.blit(self.textures['S'], (sky_offset - WIDTH, 0))
         self.sc.blit(self.textures['S'], (sky_offset + WIDTH, 0))
         #pygame.draw.rect(self.sc, SKYBLUE, (0, 0, WIDTH, HALF_HEIGHT))
-        pygame.draw.rect(self.sc, DARKGRAY, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
+        pygame.draw.rect(self.sc, BROWN, (0, HALF_HEIGHT, WIDTH, HALF_HEIGHT))
 
     def world(self, world_objects):
         for obj in sorted(world_objects, key=lambda n: n[0], reverse=True):
@@ -34,7 +34,7 @@ class Drawing:
     
     def player(self, player):
         pygame.draw.rect(self.sc, RED, (HALF_WIDTH - 400, HEIGHT - 60, 32 * player.health, 32))
-        self.sc.blit(player.weapons[player.currentWeapon], (HALF_WIDTH - 148, HEIGHT - 250))
+        self.sc.blit(player.weapons[player.currentWeapon], (HALF_WIDTH - 148, HEIGHT - 500))
 
     def mini_map(self, player, mini_map):
         self.sc_map.fill(BLACK)

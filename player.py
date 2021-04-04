@@ -26,8 +26,9 @@ class Player(pygame.sprite.Sprite):
         self.weapons = []
         self.cos_a, self.sin_a = 0,0 
         self.ammo = AMMO
-        for x in range(0,3):
+        for x in range(0,7):
             self.weapons.append(pygame.image.load('img/gun/{}.png'.format(x)))
+            self.weapons[x] = pygame.transform.scale2x(self.weapons[x])
             self.weapons[x] = pygame.transform.scale2x(self.weapons[x])
 
     @property
@@ -41,10 +42,10 @@ class Player(pygame.sprite.Sprite):
     def gunAnimation(self):
         self.currentWeapon = self.reloadCount
         self.gunAnimationCount += 1
-        if self.gunAnimationCount == 5:
+        if self.gunAnimationCount == 2:
             self.reloadCount += 1
             self.gunAnimationCount = 0
-        if self.reloadCount == 3:
+        if self.reloadCount == 7:
             self.ammo = AMMO
             self.reloadCount = 0
             self.currentWeapon = 0
