@@ -19,7 +19,7 @@ if menu.start == True:
     pygame.mixer.init()
     sc = pygame.display.set_mode((WIDTH, HEIGHT))
     sc_map = pygame.Surface((WIDTH // MAP_SCALE, HEIGHT // MAP_SCALE))
-    pygame.display.set_caption('AMERICA RIP OFF XD')
+    pygame.display.set_caption('DOOMCOPS')
     clock = pygame.time.Clock()
     #player = Player()
     ls = levelSystem()
