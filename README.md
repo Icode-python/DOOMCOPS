@@ -1,4 +1,4 @@
-# pyweekGameJam
+# DOOMCOPS
 CONTROLS:
 wasd to move
 use mouse or left and right keys to change where you look
